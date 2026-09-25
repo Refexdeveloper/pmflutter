@@ -1,0 +1,26 @@
+{
+  "name": "aravind-pm-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dump": "node dump-kissflow.mjs",
+    "seed": "node backend/src/seed.js",
+    "dev:api": "node backend/src/server.js",
+    "dev:web": "vite --config web/vite.config.js",
+    "dev": "concurrently -k \"npm run dev:api\" \"npm run dev:web\"",
+    "start": "npm run seed && npm run dev"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "vite": "^8.0.1"
+  },
+  "dependencies": {
+    "framer-motion": "^12.38.0",
+    "react": "^19.1.2",
+    "react-dom": "^19.1.2"
+  }
+}

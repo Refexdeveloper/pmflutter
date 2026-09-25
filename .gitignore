@@ -1,0 +1,37 @@
+# Dependencies & build
+node_modules/
+dist/
+.vite/
+*.local
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Logs & OS
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+
+# Nested clones / reference trees (not part of main app)
+mis-table-kf/
+Project-tracker-karthika/
+ProjectUpdate_31072026/
+qrcode-view/
+ref_lead/
+solar-expense-dashboard-v2/
+
+# Build zips / archives
+*.zip
+
+# Cursor local
+.cursor/
+
+src/lib/kfAccessKeys.js

@@ -1,0 +1,2892 @@
+{
+  "startedAt": "2026-09-16T07:39:47.480Z",
+  "base": "http://localhost:3000/",
+  "overflowThresholdPx": 24,
+  "skippedEngines": [],
+  "surfaces": [
+    {
+      "profile": "iPhone-SE",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "login",
+      "ok": true,
+      "ms": 797,
+      "layout": {
+        "vw": 320,
+        "vh": 568,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-SE-login"
+    },
+    {
+      "profile": "iPhone-SE",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 848,
+      "layout": {
+        "vw": 320,
+        "vh": 568,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-SE-employee-projects"
+    },
+    {
+      "profile": "iPhone-SE",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 920,
+      "layout": {
+        "vw": 320,
+        "vh": 568,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-SE-employee-tasks"
+    },
+    {
+      "profile": "iPhone-SE",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-task-form",
+      "ok": true,
+      "ms": 1322,
+      "layout": {
+        "vw": 320,
+        "vh": 568,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-SE-employee-task-form"
+    },
+    {
+      "profile": "iPhone-SE",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 814,
+      "layout": {
+        "vw": 320,
+        "vh": 568,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-SE-employee-subtasks"
+    },
+    {
+      "profile": "iPhone-SE",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 818,
+      "layout": {
+        "vw": 320,
+        "vh": 568,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Task",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Sub Task",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-SE-pm-home"
+    },
+    {
+      "profile": "iPhone-SE",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 826,
+      "layout": {
+        "vw": 320,
+        "vh": 568,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [
+          {
+            "testid": "",
+            "tag": "TABLE",
+            "right": 873,
+            "left": 13
+          }
+        ],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-SE-pm-admin"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "login",
+      "ok": true,
+      "ms": 897,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-14-login"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 1047,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-14-employee-projects"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 9511,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-14-employee-tasks"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-task-form",
+      "ok": true,
+      "ms": 2107,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-14-employee-task-form"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 975,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-14-employee-subtasks"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 864,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Task",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Sub Task",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-14-pm-home"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 863,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [
+          {
+            "testid": "",
+            "tag": "TABLE",
+            "right": 873,
+            "left": 13
+          }
+        ],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPhone-14-pm-admin"
+    },
+    {
+      "profile": "Pixel-7",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "login",
+      "ok": true,
+      "ms": 876,
+      "layout": {
+        "vw": 412,
+        "vh": 839,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-Pixel-7-login"
+    },
+    {
+      "profile": "Pixel-7",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 1021,
+      "layout": {
+        "vw": 412,
+        "vh": 839,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-Pixel-7-employee-projects"
+    },
+    {
+      "profile": "Pixel-7",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 8899,
+      "layout": {
+        "vw": 412,
+        "vh": 839,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-Pixel-7-employee-tasks"
+    },
+    {
+      "profile": "Pixel-7",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-task-form",
+      "ok": true,
+      "ms": 8596,
+      "layout": {
+        "vw": 412,
+        "vh": 839,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-Pixel-7-employee-task-form"
+    },
+    {
+      "profile": "Pixel-7",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 857,
+      "layout": {
+        "vw": 412,
+        "vh": 839,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-Pixel-7-employee-subtasks"
+    },
+    {
+      "profile": "Pixel-7",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 897,
+      "layout": {
+        "vw": 412,
+        "vh": 839,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Task",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Sub Task",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-Pixel-7-pm-home"
+    },
+    {
+      "profile": "Pixel-7",
+      "engine": "chromium",
+      "kind": "phone",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 865,
+      "layout": {
+        "vw": 412,
+        "vh": 839,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [
+          {
+            "testid": "",
+            "tag": "TABLE",
+            "right": 873,
+            "left": 13
+          }
+        ],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-Pixel-7-pm-admin"
+    },
+    {
+      "profile": "iPad-Mini",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "login",
+      "ok": true,
+      "ms": 879,
+      "layout": {
+        "vw": 768,
+        "vh": 1024,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Mini-login"
+    },
+    {
+      "profile": "iPad-Mini",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 1106,
+      "layout": {
+        "vw": 768,
+        "vh": 1024,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Mini-employee-projects"
+    },
+    {
+      "profile": "iPad-Mini",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 8903,
+      "layout": {
+        "vw": 768,
+        "vh": 1024,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Mini-employee-tasks"
+    },
+    {
+      "profile": "iPad-Mini",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "employee-task-form",
+      "ok": true,
+      "ms": 9195,
+      "layout": {
+        "vw": 768,
+        "vh": 1024,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "B",
+            "w": 11,
+            "h": 20
+          },
+          {
+            "text": "I",
+            "w": 5,
+            "h": 20
+          },
+          {
+            "text": "Clear status",
+            "w": 19,
+            "h": 28
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Mini-employee-task-form"
+    },
+    {
+      "profile": "iPad-Mini",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 880,
+      "layout": {
+        "vw": 768,
+        "vh": 1024,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Mini-employee-subtasks"
+    },
+    {
+      "profile": "iPad-Mini",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 980,
+      "layout": {
+        "vw": 768,
+        "vh": 1024,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "My Work",
+            "w": 70,
+            "h": 29
+          },
+          {
+            "text": "My Team",
+            "w": 69,
+            "h": 29
+          },
+          {
+            "text": "Projects",
+            "w": 60,
+            "h": 29
+          },
+          {
+            "text": "Tasks",
+            "w": 46,
+            "h": 29
+          },
+          {
+            "text": "Subtasks",
+            "w": 64,
+            "h": 29
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Mini-pm-home"
+    },
+    {
+      "profile": "iPad-Mini",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 904,
+      "layout": {
+        "vw": 768,
+        "vh": 1024,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [
+          {
+            "testid": "",
+            "tag": "TABLE",
+            "right": 877,
+            "left": 17
+          }
+        ],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Mini-pm-admin"
+    },
+    {
+      "profile": "iPad-Pro-11",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "login",
+      "ok": true,
+      "ms": 871,
+      "layout": {
+        "vw": 834,
+        "vh": 1194,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Pro-11-login"
+    },
+    {
+      "profile": "iPad-Pro-11",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 1156,
+      "layout": {
+        "vw": 834,
+        "vh": 1194,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Pro-11-employee-projects"
+    },
+    {
+      "profile": "iPad-Pro-11",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 8907,
+      "layout": {
+        "vw": 834,
+        "vh": 1194,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Pro-11-employee-tasks"
+    },
+    {
+      "profile": "iPad-Pro-11",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "employee-task-form",
+      "ok": true,
+      "ms": 8686,
+      "layout": {
+        "vw": 834,
+        "vh": 1194,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "B",
+            "w": 11,
+            "h": 20
+          },
+          {
+            "text": "I",
+            "w": 5,
+            "h": 20
+          },
+          {
+            "text": "Clear status",
+            "w": 19,
+            "h": 28
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Pro-11-employee-task-form"
+    },
+    {
+      "profile": "iPad-Pro-11",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 876,
+      "layout": {
+        "vw": 834,
+        "vh": 1194,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Pro-11-employee-subtasks"
+    },
+    {
+      "profile": "iPad-Pro-11",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 1017,
+      "layout": {
+        "vw": 834,
+        "vh": 1194,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "My Work",
+            "w": 70,
+            "h": 29
+          },
+          {
+            "text": "My Team",
+            "w": 69,
+            "h": 29
+          },
+          {
+            "text": "Projects",
+            "w": 60,
+            "h": 29
+          },
+          {
+            "text": "Tasks",
+            "w": 46,
+            "h": 29
+          },
+          {
+            "text": "Subtasks",
+            "w": 64,
+            "h": 29
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Pro-11-pm-home"
+    },
+    {
+      "profile": "iPad-Pro-11",
+      "engine": "chromium",
+      "kind": "tablet",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 850,
+      "layout": {
+        "vw": 834,
+        "vh": 1194,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [
+          {
+            "testid": "",
+            "tag": "TABLE",
+            "right": 877,
+            "left": 17
+          }
+        ],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-iPad-Pro-11-pm-admin"
+    },
+    {
+      "profile": "desktop-1280",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "login",
+      "ok": true,
+      "ms": 778,
+      "layout": {
+        "vw": 1280,
+        "vh": 800,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1280-login"
+    },
+    {
+      "profile": "desktop-1280",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 890,
+      "layout": {
+        "vw": 1280,
+        "vh": 800,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "PROJECT NAME",
+            "w": 113,
+            "h": 20
+          },
+          {
+            "text": "OWNER",
+            "w": 66,
+            "h": 20
+          },
+          {
+            "text": "START DATE",
+            "w": 87,
+            "h": 16
+          },
+          {
+            "text": "END DATE",
+            "w": 76,
+            "h": 16
+          },
+          {
+            "text": "REVISED",
+            "w": 65,
+            "h": 16
+          },
+          {
+            "text": "PROGRESS",
+            "w": 78,
+            "h": 16
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1280-employee-projects"
+    },
+    {
+      "profile": "desktop-1280",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 8804,
+      "layout": {
+        "vw": 1280,
+        "vh": 800,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1280-employee-tasks"
+    },
+    {
+      "profile": "desktop-1280",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 4626,
+      "layout": {
+        "vw": 1280,
+        "vh": 800,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1280-employee-subtasks"
+    },
+    {
+      "profile": "desktop-1280",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 799,
+      "layout": {
+        "vw": 1280,
+        "vh": 800,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "My Work",
+            "w": 70,
+            "h": 29
+          },
+          {
+            "text": "My Team",
+            "w": 69,
+            "h": 29
+          },
+          {
+            "text": "Projects",
+            "w": 60,
+            "h": 29
+          },
+          {
+            "text": "Tasks",
+            "w": 46,
+            "h": 29
+          },
+          {
+            "text": "Subtasks",
+            "w": 64,
+            "h": 29
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1280-pm-home"
+    },
+    {
+      "profile": "desktop-1280",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 778,
+      "layout": {
+        "vw": 1280,
+        "vh": 800,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1280-pm-admin"
+    },
+    {
+      "profile": "desktop-1920",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "login",
+      "ok": true,
+      "ms": 781,
+      "layout": {
+        "vw": 1920,
+        "vh": 1080,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1920-login"
+    },
+    {
+      "profile": "desktop-1920",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 968,
+      "layout": {
+        "vw": 1920,
+        "vh": 1080,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "PROJECT NAME",
+            "w": 113,
+            "h": 20
+          },
+          {
+            "text": "OWNER",
+            "w": 66,
+            "h": 20
+          },
+          {
+            "text": "START DATE",
+            "w": 87,
+            "h": 16
+          },
+          {
+            "text": "END DATE",
+            "w": 76,
+            "h": 16
+          },
+          {
+            "text": "REVISED",
+            "w": 65,
+            "h": 16
+          },
+          {
+            "text": "PROGRESS",
+            "w": 78,
+            "h": 16
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1920-employee-projects"
+    },
+    {
+      "profile": "desktop-1920",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 8826,
+      "layout": {
+        "vw": 1920,
+        "vh": 1080,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1920-employee-tasks"
+    },
+    {
+      "profile": "desktop-1920",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 8791,
+      "layout": {
+        "vw": 1920,
+        "vh": 1080,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1920-employee-subtasks"
+    },
+    {
+      "profile": "desktop-1920",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 843,
+      "layout": {
+        "vw": 1920,
+        "vh": 1080,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "My Work",
+            "w": 70,
+            "h": 29
+          },
+          {
+            "text": "My Team",
+            "w": 69,
+            "h": 29
+          },
+          {
+            "text": "Projects",
+            "w": 60,
+            "h": 29
+          },
+          {
+            "text": "Tasks",
+            "w": 46,
+            "h": 29
+          },
+          {
+            "text": "Subtasks",
+            "w": 64,
+            "h": 29
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1920-pm-home"
+    },
+    {
+      "profile": "desktop-1920",
+      "engine": "chromium",
+      "kind": "desktop",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 823,
+      "layout": {
+        "vw": 1920,
+        "vh": 1080,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 124,
+            "h": 24
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "chromium-desktop-1920-pm-admin"
+    },
+    {
+      "profile": "firefox-1440",
+      "engine": "firefox",
+      "kind": "desktop",
+      "surface": "login",
+      "ok": true,
+      "ms": 790,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-1440-login"
+    },
+    {
+      "profile": "firefox-1440",
+      "engine": "firefox",
+      "kind": "desktop",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 1128,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "PROJECT NAME",
+            "w": 113,
+            "h": 20
+          },
+          {
+            "text": "OWNER",
+            "w": 66,
+            "h": 20
+          },
+          {
+            "text": "START DATE",
+            "w": 87,
+            "h": 16
+          },
+          {
+            "text": "END DATE",
+            "w": 76,
+            "h": 16
+          },
+          {
+            "text": "REVISED",
+            "w": 65,
+            "h": 16
+          },
+          {
+            "text": "PROGRESS",
+            "w": 78,
+            "h": 16
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-1440-employee-projects"
+    },
+    {
+      "profile": "firefox-1440",
+      "engine": "firefox",
+      "kind": "desktop",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 8836,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-1440-employee-tasks"
+    },
+    {
+      "profile": "firefox-1440",
+      "engine": "firefox",
+      "kind": "desktop",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 8842,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-1440-employee-subtasks"
+    },
+    {
+      "profile": "firefox-1440",
+      "engine": "firefox",
+      "kind": "desktop",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 801,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "My Work",
+            "w": 70,
+            "h": 29
+          },
+          {
+            "text": "My Team",
+            "w": 69,
+            "h": 29
+          },
+          {
+            "text": "Projects",
+            "w": 60,
+            "h": 29
+          },
+          {
+            "text": "Tasks",
+            "w": 46,
+            "h": 29
+          },
+          {
+            "text": "Subtasks",
+            "w": 64,
+            "h": 29
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-1440-pm-home"
+    },
+    {
+      "profile": "firefox-1440",
+      "engine": "firefox",
+      "kind": "desktop",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 792,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-1440-pm-admin"
+    },
+    {
+      "profile": "firefox-tablet",
+      "engine": "firefox",
+      "kind": "tablet",
+      "surface": "login",
+      "ok": true,
+      "ms": 780,
+      "layout": {
+        "vw": 820,
+        "vh": 1180,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-tablet-login"
+    },
+    {
+      "profile": "firefox-tablet",
+      "engine": "firefox",
+      "kind": "tablet",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 970,
+      "layout": {
+        "vw": 820,
+        "vh": 1180,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-tablet-employee-projects"
+    },
+    {
+      "profile": "firefox-tablet",
+      "engine": "firefox",
+      "kind": "tablet",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 8809,
+      "layout": {
+        "vw": 820,
+        "vh": 1180,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-tablet-employee-tasks"
+    },
+    {
+      "profile": "firefox-tablet",
+      "engine": "firefox",
+      "kind": "tablet",
+      "surface": "employee-task-form",
+      "ok": true,
+      "ms": 9115,
+      "layout": {
+        "vw": 820,
+        "vh": 1180,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "B",
+            "w": 11,
+            "h": 20
+          },
+          {
+            "text": "I",
+            "w": 5,
+            "h": 20
+          },
+          {
+            "text": "Clear status",
+            "w": 19,
+            "h": 28
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-tablet-employee-task-form"
+    },
+    {
+      "profile": "firefox-tablet",
+      "engine": "firefox",
+      "kind": "tablet",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 843,
+      "layout": {
+        "vw": 820,
+        "vh": 1180,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-tablet-employee-subtasks"
+    },
+    {
+      "profile": "firefox-tablet",
+      "engine": "firefox",
+      "kind": "tablet",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 810,
+      "layout": {
+        "vw": 820,
+        "vh": 1180,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "My Work",
+            "w": 70,
+            "h": 29
+          },
+          {
+            "text": "My Team",
+            "w": 69,
+            "h": 29
+          },
+          {
+            "text": "Projects",
+            "w": 60,
+            "h": 29
+          },
+          {
+            "text": "Tasks",
+            "w": 46,
+            "h": 29
+          },
+          {
+            "text": "Subtasks",
+            "w": 64,
+            "h": 29
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-tablet-pm-home"
+    },
+    {
+      "profile": "firefox-tablet",
+      "engine": "firefox",
+      "kind": "tablet",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 787,
+      "layout": {
+        "vw": 820,
+        "vh": 1180,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "SELECT",
+            "w": 122,
+            "h": 22
+          },
+          {
+            "text": "Switch user",
+            "w": 62,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [
+          {
+            "testid": "",
+            "tag": "TABLE",
+            "right": 877,
+            "left": 17
+          }
+        ],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "firefox-firefox-tablet-pm-admin"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "webkit",
+      "kind": "phone",
+      "surface": "login",
+      "ok": true,
+      "ms": 1014,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-iPhone-14-login"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "webkit",
+      "kind": "phone",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 1707,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-iPhone-14-employee-projects"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "webkit",
+      "kind": "phone",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 9104,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-iPhone-14-employee-tasks"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "webkit",
+      "kind": "phone",
+      "surface": "employee-task-form",
+      "ok": true,
+      "ms": 10648,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-iPhone-14-employee-task-form"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "webkit",
+      "kind": "phone",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 925,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-iPhone-14-employee-subtasks"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "webkit",
+      "kind": "phone",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 1077,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Task",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Sub Task",
+            "w": 92,
+            "h": 19
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-iPhone-14-pm-home"
+    },
+    {
+      "profile": "iPhone-14",
+      "engine": "webkit",
+      "kind": "phone",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 1141,
+      "layout": {
+        "vw": 390,
+        "vh": 664,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [
+          {
+            "testid": "",
+            "tag": "TABLE",
+            "right": 873,
+            "left": 13
+          }
+        ],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-iPhone-14-pm-admin"
+    },
+    {
+      "profile": "safari-1440",
+      "engine": "webkit",
+      "kind": "desktop",
+      "surface": "login",
+      "ok": true,
+      "ms": 872,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": false,
+        "smallTaps": [],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-safari-1440-login"
+    },
+    {
+      "profile": "safari-1440",
+      "engine": "webkit",
+      "kind": "desktop",
+      "surface": "employee-projects",
+      "ok": true,
+      "ms": 1434,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "PROJECT NAME",
+            "w": 122,
+            "h": 20
+          },
+          {
+            "text": "OWNER",
+            "w": 68,
+            "h": 20
+          },
+          {
+            "text": "START DATE",
+            "w": 95,
+            "h": 16
+          },
+          {
+            "text": "END DATE",
+            "w": 80,
+            "h": 16
+          },
+          {
+            "text": "REVISED",
+            "w": 72,
+            "h": 16
+          },
+          {
+            "text": "PROGRESS",
+            "w": 88,
+            "h": 16
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-safari-1440-employee-projects"
+    },
+    {
+      "profile": "safari-1440",
+      "engine": "webkit",
+      "kind": "desktop",
+      "surface": "employee-tasks",
+      "ok": true,
+      "ms": 8999,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-safari-1440-employee-tasks"
+    },
+    {
+      "profile": "safari-1440",
+      "engine": "webkit",
+      "kind": "desktop",
+      "surface": "employee-subtasks",
+      "ok": true,
+      "ms": 8903,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-safari-1440-employee-subtasks"
+    },
+    {
+      "profile": "safari-1440",
+      "engine": "webkit",
+      "kind": "desktop",
+      "surface": "pm-home",
+      "ok": true,
+      "ms": 999,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "My Work",
+            "w": 70,
+            "h": 29
+          },
+          {
+            "text": "My Team",
+            "w": 70,
+            "h": 29
+          },
+          {
+            "text": "Projects",
+            "w": 63,
+            "h": 29
+          },
+          {
+            "text": "Tasks",
+            "w": 50,
+            "h": 29
+          },
+          {
+            "text": "Subtasks",
+            "w": 69,
+            "h": 29
+          },
+          {
+            "text": "Project",
+            "w": 92,
+            "h": 19
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-safari-1440-pm-home"
+    },
+    {
+      "profile": "safari-1440",
+      "engine": "webkit",
+      "kind": "desktop",
+      "surface": "pm-admin",
+      "ok": true,
+      "ms": 959,
+      "layout": {
+        "vw": 1440,
+        "vh": 900,
+        "overflowX": 0,
+        "viewportMeta": "width=device-width, initial-scale=1.0",
+        "hasRoot": true,
+        "smallTaps": [
+          {
+            "text": "Employee\nProject Manager",
+            "w": 134,
+            "h": 30
+          },
+          {
+            "text": "Switch user",
+            "w": 67,
+            "h": 16
+          },
+          {
+            "text": "Dismiss",
+            "w": 25,
+            "h": 32
+          }
+        ],
+        "clipped": [],
+        "title": "Project Management Tracker"
+      },
+      "issues": [],
+      "shot": "webkit-safari-1440-pm-admin"
+    }
+  ],
+  "issues": [],
+  "finishedAt": "2026-09-16T07:44:09.683Z",
+  "failedSurfaces": []
+}

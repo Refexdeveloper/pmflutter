@@ -1,0 +1,26 @@
+{
+  "startedAt": "2026-09-22T11:57:59.202Z",
+  "base": "http://localhost:3000/",
+  "pages": [
+    {
+      "id": "projects",
+      "rows": 3,
+      "empty": false,
+      "snippet": "Standalone mode — connected with access keys (not inside a Kissflow page). Signed in as aravind.srinivasan@refex.co.in. Workspace Employee Project Manager Switch user Project Management Tracker Projects Tasks SubTasks A Good evening, Aravind Your projects · aravind.srinivasan@ref"
+    },
+    {
+      "id": "tasks",
+      "rows": 4,
+      "empty": false,
+      "snippet": "Standalone mode — connected with access keys (not inside a Kissflow page). Signed in as aravind.srinivasan@refex.co.in. Workspace Employee Project Manager Switch user Project Management Tracker Projects Tasks SubTasks A Good evening, Aravind Your tasks · aravind.srinivasan@refex."
+    },
+    {
+      "id": "subtasks",
+      "rows": 10,
+      "empty": false,
+      "snippet": "Standalone mode — connected with access keys (not inside a Kissflow page). Signed in as aravind.srinivasan@refex.co.in. Workspace Employee Project Manager Switch user Project Management Tracker Projects Tasks SubTasks A Good evening, Aravind Your subtasks · aravind.srinivasan@ref"
+    }
+  ],
+  "httpErrors": [],
+  "ok": true
+}

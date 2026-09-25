@@ -1,0 +1,592 @@
+{
+  "startedAt": "2026-09-16T07:21:56.272Z",
+  "base": "http://localhost:3000/",
+  "taskName": "PW Task 1789543316271",
+  "subtaskName": "PW Subtask 1789543316271",
+  "dashboards": [
+    {
+      "id": "projects",
+      "headings": [
+        "Project Management Tracker",
+        "Project Insights",
+        "Project Health Monitor",
+        "Project Health Overview"
+      ],
+      "hasCreateTask": false,
+      "hasCreateSubtask": false,
+      "hasInsights": true
+    },
+    {
+      "id": "tasks",
+      "headings": [
+        "Project Management Tracker",
+        "Task Insights",
+        "Task Health Monitor",
+        "Task Tracker"
+      ],
+      "hasCreateTask": true,
+      "hasCreateSubtask": false,
+      "hasInsights": true
+    },
+    {
+      "id": "subtasks",
+      "headings": [
+        "Project Management Tracker",
+        "All subtasks"
+      ],
+      "hasCreateTask": false,
+      "hasCreateSubtask": true,
+      "hasInsights": true
+    },
+    {
+      "id": "pm-home",
+      "headings": [
+        "Project Management Tracker",
+        "Good afternoon, Aravind",
+        "All Tasks"
+      ]
+    },
+    {
+      "id": "pm-admin",
+      "headings": [
+        "Project Management Tracker",
+        "Admin Tasks"
+      ]
+    }
+  ],
+  "createPayloads": [
+    {
+      "source": "task",
+      "webhook": {
+        "href": "/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg",
+        "payload": {
+          "Sub_Task_Name": "PW Task 1789543316271",
+          "Task_Priority": "High",
+          "Start_Date": "2026-09-16",
+          "End_Date": "2026-09-30",
+          "Task_Status": "Open",
+          "Task_type": "Development",
+          "Project": "Individual Task",
+          "Project_Name": "Individual Task",
+          "Is_Dependent_on_another_Task": false,
+          "Assigned_To": {
+            "_id": "UsDTb7E7dFmW",
+            "Kind": "User",
+            "Name": "Aravind",
+            "Email": "aravind.srinivasan@refex.co.in"
+          },
+          "Submitted_By": {
+            "Name": "Aravind",
+            "Email": "aravind.srinivasan@refex.co.in"
+          },
+          "Submitted_At": "2026-09-16T07:22:09.412Z",
+          "source": "task",
+          "project": null,
+          "task": {
+            "Sub_Task_Name": "PW Task 1789543316271",
+            "Task_Priority": "High",
+            "Start_Date": "2026-09-16",
+            "End_Date": "2026-09-30",
+            "Task_Status": "Open",
+            "Task_type": "Development",
+            "Project": "Individual Task",
+            "Project_Name": "Individual Task",
+            "Is_Dependent_on_another_Task": false,
+            "Assigned_To": {
+              "_id": "UsDTb7E7dFmW",
+              "Kind": "User",
+              "Name": "Aravind",
+              "Email": "aravind.srinivasan@refex.co.in"
+            },
+            "Submitted_By": {
+              "Name": "Aravind",
+              "Email": "aravind.srinivasan@refex.co.in"
+            },
+            "Submitted_At": "2026-09-16T07:22:09.412Z"
+          },
+          "subtask": null
+        },
+        "at": "2026-09-16T07:22:09.412Z"
+      }
+    },
+    {
+      "source": "subtask",
+      "webhook": {
+        "href": "/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg",
+        "payload": {
+          "Sub_task_Name": "PW Subtask 1789543316271",
+          "Sub_task_Priority": "Medium",
+          "TStatus": "Open",
+          "Start_Date": "2026-09-16",
+          "End_Date": "2026-09-30",
+          "Dependent_ON": false,
+          "Task_ID_Hidden": "PW Task 1789543316271",
+          "Assignee_1": {
+            "_id": "UsDTb7E7dFmW",
+            "Kind": "User",
+            "Name": "Aravind",
+            "Email": "aravind.srinivasan@refex.co.in"
+          },
+          "Assignee": "Aravind",
+          "Submitted_By": {
+            "Name": "Aravind",
+            "Email": "aravind.srinivasan@refex.co.in"
+          },
+          "Submitted_At": "2026-09-16T07:22:20.803Z",
+          "source": "subtask",
+          "project": null,
+          "task": null,
+          "subtask": {
+            "Sub_task_Name": "PW Subtask 1789543316271",
+            "Sub_task_Priority": "Medium",
+            "TStatus": "Open",
+            "Start_Date": "2026-09-16",
+            "End_Date": "2026-09-30",
+            "Dependent_ON": false,
+            "Task_ID_Hidden": "PW Task 1789543316271",
+            "Assignee_1": {
+              "_id": "UsDTb7E7dFmW",
+              "Kind": "User",
+              "Name": "Aravind",
+              "Email": "aravind.srinivasan@refex.co.in"
+            },
+            "Assignee": "Aravind",
+            "Submitted_By": {
+              "Name": "Aravind",
+              "Email": "aravind.srinivasan@refex.co.in"
+            },
+            "Submitted_At": "2026-09-16T07:22:20.803Z"
+          }
+        },
+        "at": "2026-09-16T07:22:20.803Z"
+      }
+    }
+  ],
+  "issues": [
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    }
+  ],
+  "httpErrors": [
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/integration/2/AcCMptp3yqcn/webhook/ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    }
+  ],
+  "steps": [
+    {
+      "name": "open-app",
+      "ok": true,
+      "ms": 2392,
+      "detail": {
+        "url": "http://localhost:3000/"
+      }
+    },
+    {
+      "name": "identity-employee",
+      "ok": true,
+      "ms": 4757,
+      "detail": {
+        "hasGate": false
+      }
+    },
+    {
+      "name": "create-task",
+      "ok": true,
+      "ms": 15125,
+      "detail": {
+        "stillOpen": false,
+        "errors": [],
+        "source": "task",
+        "name": "PW Task 1789543316271",
+        "assignedTo": "UsDTb7E7dFmW",
+        "dates": [
+          "2026-09-16",
+          "2026-09-30"
+        ]
+      }
+    },
+    {
+      "name": "task-on-dashboard",
+      "ok": true,
+      "ms": 1022,
+      "detail": {
+        "visible": true,
+        "hasAravind": true
+      }
+    },
+    {
+      "name": "create-subtask-from-task",
+      "ok": true,
+      "ms": 9639,
+      "detail": {
+        "stillOpen": false,
+        "errors": [],
+        "source": "subtask",
+        "name": "PW Subtask 1789543316271",
+        "assignee": "UsDTb7E7dFmW",
+        "dependentOn": false,
+        "dates": [
+          "2026-09-16",
+          "2026-09-30"
+        ]
+      }
+    },
+    {
+      "name": "subtask-on-dashboard",
+      "ok": true,
+      "ms": 1777,
+      "detail": {
+        "visible": true,
+        "hasAravind": true
+      }
+    },
+    {
+      "name": "dashboard-projects",
+      "ok": true,
+      "ms": 2337,
+      "detail": {
+        "id": "projects",
+        "headings": [
+          "Project Management Tracker",
+          "Project Insights",
+          "Project Health Monitor",
+          "Project Health Overview"
+        ],
+        "hasCreateTask": false,
+        "hasCreateSubtask": false,
+        "hasInsights": true
+      }
+    },
+    {
+      "name": "dashboard-tasks",
+      "ok": true,
+      "ms": 2265,
+      "detail": {
+        "id": "tasks",
+        "headings": [
+          "Project Management Tracker",
+          "Task Insights",
+          "Task Health Monitor",
+          "Task Tracker"
+        ],
+        "hasCreateTask": true,
+        "hasCreateSubtask": false,
+        "hasInsights": true
+      }
+    },
+    {
+      "name": "dashboard-subtasks",
+      "ok": true,
+      "ms": 1937,
+      "detail": {
+        "id": "subtasks",
+        "headings": [
+          "Project Management Tracker",
+          "All subtasks"
+        ],
+        "hasCreateTask": false,
+        "hasCreateSubtask": true,
+        "hasInsights": true
+      }
+    },
+    {
+      "name": "pm-dashboards",
+      "ok": true,
+      "ms": 5257,
+      "detail": {
+        "switched": true,
+        "dashboards": [
+          "projects",
+          "tasks",
+          "subtasks",
+          "pm-home",
+          "pm-admin"
+        ]
+      }
+    }
+  ],
+  "finishedAt": "2026-09-16T07:22:43.403Z",
+  "failedSteps": []
+}

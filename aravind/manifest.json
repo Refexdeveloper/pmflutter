@@ -1,0 +1,10 @@
+{
+  "source": "seed-from-mocks",
+  "note": "Live Kissflow list/report APIs returned 401 with current access keys. Re-run fetch-kissflow-dump.mjs when keys have case/process read access.",
+  "builtAt": "2026-09-08T05:08:22.222Z",
+  "counts": {
+    "projects": 13,
+    "tasks": 23,
+    "subtasks": 27
+  }
+}

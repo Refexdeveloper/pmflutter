@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root,
+.rootDiv {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Inter, Plus Jakarta Sans, system-ui, sans-serif;
+  background: #edf1ff;
+  color: #0f172a;
+}

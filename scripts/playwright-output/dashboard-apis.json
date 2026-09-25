@@ -1,0 +1,92 @@
+{
+  "startedAt": "2026-09-22T05:12:13.285Z",
+  "base": "http://localhost:3000/",
+  "pages": [
+    {
+      "id": "projects",
+      "failedLoad": false,
+      "emptyHint": false,
+      "showsLoginEmail": true,
+      "snippet": "Standalone mode — connected with access keys (not inside a Kissflow page). Signed in as aravind.srinivasan@refex.co.in. Workspace Employee Project Manager Switch user Project Management Tracker Projects Tasks SubTasks A Good morning, Aravind Your projects · aravind.srinivasan@refex.co.in COMPANY All companies BUSINESS "
+    },
+    {
+      "id": "tasks",
+      "failedLoad": false,
+      "emptyHint": false,
+      "showsLoginEmail": true,
+      "snippet": "Standalone mode — connected with access keys (not inside a Kissflow page). Signed in as aravind.srinivasan@refex.co.in. Workspace Employee Project Manager Switch user Project Management Tracker Projects Tasks SubTasks A Good morning, Aravind Your tasks · aravind.srinivasan@refex.co.in PERIOD All time USER All Users (1)"
+    },
+    {
+      "id": "subtasks",
+      "failedLoad": false,
+      "emptyHint": true,
+      "showsLoginEmail": true,
+      "snippet": "Standalone mode — connected with access keys (not inside a Kissflow page). Signed in as aravind.srinivasan@refex.co.in. Workspace Employee Project Manager Switch user Project Management Tracker Projects Tasks SubTasks A Good morning, Aravind Your subtasks · aravind.srinivasan@refex.co.in Create subtask Your subtasks 0 "
+    }
+  ],
+  "http": [
+    {
+      "status": 200,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/user/2/AcCMptlq60zH/?page_number=1&page_size=50&user_type=User&active_user=true&q=aravind.srinivasan%40refex.co.in"
+    },
+    {
+      "status": 200,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/case/2/AcCMptlq60zH/Project_Management_A01/fields"
+    },
+    {
+      "status": 200,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/case/2/AcCMptlq60zH/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "status": 403,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/process-report/2/AcCMptlq60zH/Project_Sub_Task_A01/pm_external_report_A00?$assignee_email=aravind.srinivasan%40refex.co.in&_application_id=Project_Management_Tracker_A00&page_number=1&page_size=500"
+    },
+    {
+      "status": 403,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/process-report/2/AcCMptlq60zH/Project_Sub_Task_A01/pm_external_report_A00?$requester_email=aravind.srinivasan%40refex.co.in&_application_id=Project_Management_Tracker_A00&page_number=1&page_size=500"
+    },
+    {
+      "status": 200,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/process/2/AcCMptlq60zH/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 200,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/process/2/AcCMptlq60zH/admin/Project_Sub_Task_A01/item?page_number=2&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 200,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/process/2/AcCMptlq60zH/admin/Project_Sub_Task_A01/item?page_number=3&page_size=500&apply_preference=0"
+    },
+    {
+      "status": 200,
+      "kind": "live",
+      "url": "http://localhost:3000/kf-live/process/2/AcCMptlq60zH/admin/Sub_Task_Process_A00/item?page_number=1&page_size=500&apply_preference=0"
+    }
+  ],
+  "issues": [
+    {
+      "kind": "http.403",
+      "text": "403 live http://localhost:3000/kf-live/process-report/2/AcCMptlq60zH/Project_Sub_Task_A01/pm_external_report_A00?$assignee_email=aravind.srinivasan%40refex.co.in&_application_id=Project_Management_Tracker_A00&page_number=1&page_size=500"
+    },
+    {
+      "kind": "http.403",
+      "text": "403 live http://localhost:3000/kf-live/process-report/2/AcCMptlq60zH/Project_Sub_Task_A01/pm_external_report_A00?$requester_email=aravind.srinivasan%40refex.co.in&_application_id=Project_Management_Tracker_A00&page_number=1&page_size=500"
+    }
+  ],
+  "summary": {
+    "devFailCount": 0,
+    "liveOkCount": 7,
+    "liveFailCount": 2,
+    "pagesFailedLoad": [],
+    "pagesMissingEmail": [],
+    "emailFilteredApiCount": 3
+  }
+}

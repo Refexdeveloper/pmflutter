@@ -1,0 +1,716 @@
+{
+  "startedAt": "2026-09-10T11:32:31.511Z",
+  "base": "http://localhost:3000/",
+  "issues": [
+    {
+      "kind": "console.warning",
+      "text": "SDK not available (standalone / non-Kissflow mode): SDK can be initialized only inside the Kissflow platform."
+    },
+    {
+      "kind": "console.warning",
+      "text": "SDK not available (standalone / non-Kissflow mode): SDK can be initialized only inside the Kissflow platform."
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/user/2/AcCMptp3yqcn/?page_number=1&page_size=50&user_type=User&active_user=true&q=playwright.probe%40refex.co.in"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "console.warning",
+      "text": "Kissflow user search failed: You are not authorized to access this resource."
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/user/2/AcCMptp3yqcn/?page_number=1&page_size=100&user_type=User&active_user=true"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "console.warning",
+      "text": "Kissflow user directory lookup failed: You are not authorized to access this resource."
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/myitems/status/count?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "console.warning",
+      "text": "UserHub: status count fetch failed You are not authorized to access this resource."
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/participated/activity/count?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/pending/activity/count?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/pending/activity/count?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+    },
+    {
+      "kind": "console.warning",
+      "text": "USPT hub table tasks failed Kissflow reads paused"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+    },
+    {
+      "kind": "console.warning",
+      "text": "[fetchTaskTrackerData] Stopped after HTTP 429 — not trying more sources"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/myitems/status/count?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/pending/activity/count?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+    },
+    {
+      "kind": "console.warning",
+      "text": "UserHub: status count fetch failed You are not authorized to access this resource."
+    },
+    {
+      "kind": "console.warning",
+      "text": "USPT hub table tasks failed HTTP 429"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/participated/activity/count?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "console.warning",
+      "text": "[fetchTaskTrackerData] No tasks from any source [Object, Object, Object, Object, Object, Object, Object]"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01?_application_id=Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+    },
+    {
+      "kind": "http.401",
+      "text": "401 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "kind": "http.429",
+      "text": "429 http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01"
+    },
+    {
+      "kind": "console.error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+    }
+  ],
+  "console": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "at": "2026-09-10T11:32:32.293Z"
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "at": "2026-09-10T11:32:32.382Z"
+    },
+    {
+      "type": "info",
+      "text": "🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙",
+      "at": "2026-09-10T11:32:32.522Z"
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "at": "2026-09-10T11:32:32.583Z"
+    },
+    {
+      "type": "warning",
+      "text": "SDK not available (standalone / non-Kissflow mode): SDK can be initialized only inside the Kissflow platform.",
+      "at": "2026-09-10T11:32:32.690Z"
+    },
+    {
+      "type": "warning",
+      "text": "SDK not available (standalone / non-Kissflow mode): SDK can be initialized only inside the Kissflow platform.",
+      "at": "2026-09-10T11:32:32.692Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:34.806Z"
+    },
+    {
+      "type": "warning",
+      "text": "Kissflow user search failed: You are not authorized to access this resource.",
+      "at": "2026-09-10T11:32:34.807Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.095Z"
+    },
+    {
+      "type": "warning",
+      "text": "Kissflow user directory lookup failed: You are not authorized to access this resource.",
+      "at": "2026-09-10T11:32:35.096Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.469Z"
+    },
+    {
+      "type": "warning",
+      "text": "UserHub: status count fetch failed You are not authorized to access this resource.",
+      "at": "2026-09-10T11:32:35.469Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.479Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.485Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.634Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.643Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.683Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+      "at": "2026-09-10T11:32:35.695Z"
+    },
+    {
+      "type": "warning",
+      "text": "USPT hub table tasks failed Kissflow reads paused",
+      "at": "2026-09-10T11:32:35.704Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+      "at": "2026-09-10T11:32:35.705Z"
+    },
+    {
+      "type": "warning",
+      "text": "[fetchTaskTrackerData] Stopped after HTTP 429 — not trying more sources",
+      "at": "2026-09-10T11:32:35.735Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.737Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+      "at": "2026-09-10T11:32:35.776Z"
+    },
+    {
+      "type": "warning",
+      "text": "UserHub: status count fetch failed You are not authorized to access this resource.",
+      "at": "2026-09-10T11:32:35.776Z"
+    },
+    {
+      "type": "warning",
+      "text": "USPT hub table tasks failed HTTP 429",
+      "at": "2026-09-10T11:32:35.779Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+      "at": "2026-09-10T11:32:35.808Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.929Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.931Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:32:35.974Z"
+    },
+    {
+      "type": "warning",
+      "text": "[fetchTaskTrackerData] No tasks from any source [Object, Object, Object, Object, Object, Object, Object]",
+      "at": "2026-09-10T11:32:35.975Z"
+    },
+    {
+      "type": "info",
+      "text": "[pm-create] POST /process/2/AcCMptp3yqcn/Project_Sub_Task_A01?_application_id=Project_Management_A01 {}",
+      "at": "2026-09-10T11:32:43.139Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:34:06.878Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:34:07.146Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:34:40.193Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+      "at": "2026-09-10T11:34:40.232Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:34:46.234Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+      "at": "2026-09-10T11:34:46.279Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:34:57.194Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+      "at": "2026-09-10T11:34:57.246Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "at": "2026-09-10T11:35:13.273Z"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+      "at": "2026-09-10T11:35:13.305Z"
+    }
+  ],
+  "pageErrors": [],
+  "httpErrors": [
+    {
+      "status": 401,
+      "url": "http://localhost:3000/user/2/AcCMptp3yqcn/?page_number=1&page_size=50&user_type=User&active_user=true&q=playwright.probe%40refex.co.in",
+      "at": "2026-09-10T11:32:34.806Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/user/2/AcCMptp3yqcn/?page_number=1&page_size=100&user_type=User&active_user=true",
+      "at": "2026-09-10T11:32:35.095Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/myitems/status/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.469Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500",
+      "at": "2026-09-10T11:32:35.479Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/participated/activity/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.485Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/pending/activity/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.633Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0",
+      "at": "2026-09-10T11:32:35.643Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields",
+      "at": "2026-09-10T11:32:35.683Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/pending/activity/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.695Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0",
+      "at": "2026-09-10T11:32:35.705Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/myitems/status/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.737Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/pending/activity/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.775Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields",
+      "at": "2026-09-10T11:32:35.808Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/participated/activity/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.929Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/list?page_number=1&page_size=500",
+      "at": "2026-09-10T11:32:35.931Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500",
+      "at": "2026-09-10T11:32:35.973Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:34:06.878Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:34:07.146Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:40.193Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:40.232Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:46.233Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:46.279Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:57.194Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:57.246Z"
+    },
+    {
+      "status": 401,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:35:13.273Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:35:13.305Z"
+    }
+  ],
+  "http429": [
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/pending/activity/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.695Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/item?page_number=1&page_size=500&apply_preference=0",
+      "at": "2026-09-10T11:32:35.705Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/pending/activity/count?_application_id=Project_Management_A01",
+      "at": "2026-09-10T11:32:35.775Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01/fields",
+      "at": "2026-09-10T11:32:35.808Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:40.232Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:46.279Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:34:57.246Z"
+    },
+    {
+      "status": 429,
+      "url": "http://localhost:3000/case/2/AcCMptp3yqcn/Project_Management_A01",
+      "at": "2026-09-10T11:35:13.305Z"
+    }
+  ],
+  "steps": [
+    {
+      "name": "open-app",
+      "ok": true,
+      "ms": 2250,
+      "detail": {
+        "title": "",
+        "url": "http://localhost:3000/"
+      }
+    },
+    {
+      "name": "identity-gate",
+      "ok": true,
+      "ms": 4270,
+      "detail": {
+        "hasGate": false,
+        "hasBanner": true,
+        "banner": "Non-Kissflow user — Project Management is running like ITSM in-app mode. Items are matched by your work email. Signed in as playwright.probe@refex.co.in.\nWorkspace\nEmployee\nProject Manager\nSwitch user",
+        "hasKissflowAssignedError": false,
+        "hasRateLimitError": false
+      }
+    },
+    {
+      "name": "landing-state",
+      "ok": true,
+      "ms": 4113,
+      "detail": {
+        "url": "http://localhost:3000/",
+        "hasQuickCreate": true,
+        "hasCreateTask": true,
+        "snippet": "Non-Kissflow user — Project Management is running like ITSM in-app mode. Items are matched by your work email. Signed in as playwright.probe@refex.co.in.\nWorkspace\nEmployee\nProject Manager\nSwitch user\nProject Management Tracker\nHome\nDashboard\nP\nGood evening, Playwright Probe\n\nProject Manager · My Work · Tasks\n\nMy Work\nMy Team\nProjects\nTasks\nSubtasks\nProject\nTask\nSub Task\nCompany\nFunctions\nAll time\nStatus\nFailed to load data: HTTP 429\n\nTOTAL TASKS\n\n0\n\nAssigned to you\n\nMy Work\n\nClick to view →\n\nCOMPLETED\n\n0\n\n0% of total tasks\n\n0 done\n\nClick to view →\n\nPENDING\n\n0\n\n0% open / in progress\n\n0 active\n\nClick to view →\n\nOVERDUE\n\n0\n\n0% of total tasks\n\nNone overdue\n\nClick to view →\n\nDELAYED %\n\n0%\n\n0 tasks with delay days\n\n0 high priority\n\nClick to view →\n\nTasks Assigned to me\nTasks Created by Me\nOpen\n0\nClosed\n0\nTasks Assigned to me\n\n0 tasks found · chevron expands subtasks\n\nAll Projects\nAll Priority\nTASK NAME\n\tPROJECT\n\tASSIGNED BY\n\tSTART DATE\n\tEND DATE\n\tREVISED\n\tDELAY\n\tPRIORITY\n\tSTATUS\n\nNo tasks found\nContinuing as a non-Kissflow user. Projects and tasks are matched by your email."
+      }
+    },
+    {
+      "name": "open-task-form",
+      "ok": true,
+      "ms": 200,
+      "detail": {
+        "opened": true,
+        "via": "pm-open-task-details"
+      }
+    },
+    {
+      "name": "submit-task-non-kf-assignee",
+      "ok": true,
+      "ms": 86064,
+      "detail": {
+        "stillOpen": true,
+        "errors": [
+          "You are not authorized to access this resource."
+        ],
+        "hasKissflowAssignedError": false,
+        "hasRateLimitError": true,
+        "webhook": null
+      }
+    },
+    {
+      "name": "open-project-form",
+      "ok": true,
+      "ms": 135,
+      "detail": {
+        "opened": true
+      }
+    },
+    {
+      "name": "submit-project-non-kf-owner",
+      "ok": true,
+      "ms": 122078,
+      "detail": {
+        "stillOpen": true,
+        "errors": [],
+        "hasKissflowAssignedError": false,
+        "hasRateLimitError": true,
+        "webhook": null
+      }
+    }
+  ],
+  "finishedAt": "2026-09-10T11:36:41.633Z",
+  "http429Count": 8,
+  "issueCount": 62
+}

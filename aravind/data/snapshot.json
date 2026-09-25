@@ -1,0 +1,13 @@
+{
+  "fetchedAt": "2026-09-08T05:12:03.394Z",
+  "kissflow": {
+    "result": "unauthorized",
+    "note": "Access keys returned HTTP 401 for case/process list APIs on live (AcCMptlq60zH) and 403/429 on other account/origin combinations. Re-run npm run dump after keys have Project_Management_A01 / Project_Sub_Task_A01 / Sub_Task_Process_A00 permission."
+  },
+  "seed": {
+    "source": "aravind/projects.json, tasks.json, subtasks.json",
+    "projects": 13,
+    "tasks": 23,
+    "subtasks": 27
+  }
+}
