@@ -37,6 +37,24 @@ export default defineConfig(({ mode }) => {
   plugins: [
     // ...proxyPlugins,
     {
+      name: "pm-directory-api",
+      async configureServer(server) {
+        const { ensureDirectoryReady, handlePmApi, startMorningSync } = await import("./server/pmApi.mjs");
+        await ensureDirectoryReady();
+        startMorningSync();
+        server.middlewares.use(async (req, res, next) => {
+          try {
+            const handled = await handlePmApi(req, res);
+            if (!handled) next();
+          } catch (error) {
+            res.statusCode = 500;
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify({ error: error?.message || "Directory API failed" }));
+          }
+        });
+      },
+    },
+    {
       name: "pm-dev-get-to-live",
       configureServer(server) {
         const liveOrigin = String(kfLiveOrigin || "https://refexgroup.kissflow.com").replace(/\/$/, "");

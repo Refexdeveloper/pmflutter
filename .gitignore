@@ -9,6 +9,9 @@ dist/
 .env.*
 !.env.example
 
+# User Master snapshot and admin role overrides (PII)
+data/
+
 # Logs & OS
 *.log
 npm-debug.log*

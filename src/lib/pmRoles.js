@@ -1,8 +1,11 @@
-/** Kissflow Tracker roles used in this app: Employee and Project Manager only. */
+/** Tracker roles: Employee, Project Manager, and Admin (from User Master). */
+
+import { isDirectoryAdminRole, isProjectManagerDesignation } from './trackerRole.js'
 
 export const PM_ROLE_KEYS = {
   employee: 'employee',
   pm: 'pm',
+  admin: 'admin',
 }
 
 export const PM_ROLE_OPTIONS = [
@@ -21,6 +24,7 @@ export const PM_ROLE_OPTIONS = [
 export const PM_ROLE_LABELS = {
   employee: 'Employee',
   pm: 'Project Manager',
+  admin: 'Admin',
 }
 
 const compact = (value = '') =>
@@ -73,10 +77,8 @@ function keyFromRoleName(name) {
   if (!blob) return ''
   if (blob === 'employee' || blob === 'user') return 'employee'
   if (blob === 'pm' || blob === 'projectmanager') return 'pm'
+  if (isDirectoryAdminRole(blob) || blob === 'orgadmin') return 'admin'
   if (
-    blob === 'admin' ||
-    blob === 'administrator' ||
-    blob === 'appadmin' ||
     blob === 'cto' ||
     blob === 'groupcto' ||
     blob === 'groupctos' ||
@@ -101,17 +103,15 @@ export function resolvePmRoleKey(user, fallback = 'employee') {
   const blob = compact(roleBlobFromUser(user))
   if (!blob) return fallback
 
+  if (isDirectoryAdminRole(blob) || blob.includes('orgadmin')) return 'admin'
   if (blob.includes('employee')) return 'employee'
   if (
-    blob.includes('projectmanager') ||
+    isProjectManagerDesignation(blob) ||
     blob.includes('pmhead') ||
     blob.includes('groupcto') ||
-    blob.includes('admin') ||
     blob.includes('cto') ||
     blob === 'pm' ||
-    blob.includes('pmo') ||
-    blob.includes('programmanager') ||
-    blob.includes('manager')
+    blob.includes('pmo')
   ) {
     return 'pm'
   }
@@ -121,4 +121,8 @@ export function resolvePmRoleKey(user, fallback = 'employee') {
 export function labelForPmRole(roleKey) {
   const key = PM_ROLE_KEYS[roleKey] || resolvePmRoleKey({ _pm_role: roleKey }, 'employee')
   return PM_ROLE_LABELS[key] || 'Employee'
+}
+
+export function canEditTrackerDirectory(user) {
+  return resolvePmRoleKey(user, 'employee') === 'admin'
 }

@@ -9,6 +9,8 @@
     "zip:it": "node scripts/zip-all-it.js",
     "build": "vite build",
     "preview": "vite preview",
+    "start": "node server/pm-server.mjs",
+    "sync:users": "node --input-type=module -e \"import { ensureDirectoryReady, syncUserMaster } from './server/directoryStore.mjs'; await ensureDirectoryReady(); await syncUserMaster()\"",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit --project tsconfig.app.json",
     "test:e2e": "node scripts/playwright-full-app.mjs",

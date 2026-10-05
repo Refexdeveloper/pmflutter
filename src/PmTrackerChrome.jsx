@@ -7,6 +7,7 @@ import UserHubTasksPage from './UserHubTasksPage.jsx'
 import UserHubSubTasksPage from './UserHubSubTasksPage.jsx'
 import UserSpecificPT from './UserSpecificPT.jsx'
 import AdminTasks from './AdminTasks.jsx'
+import PeopleDirectory from './PeopleDirectory.jsx'
 
 const EMPLOYEE_PAGES = [
   { id: 'projects', label: 'Projects' },
@@ -35,7 +36,7 @@ function tabClass(active) {
   }`
 }
 
-function PmHeader({ page, setPage }) {
+function PmHeader({ page, setPage, includePeople = false }) {
   return (
     <header className="border-b border-slate-200 bg-white">
       <TrackerTitle />
@@ -46,6 +47,11 @@ function PmHeader({ page, setPage }) {
         <button type="button" onClick={() => setPage('admin')} className={`${tabClass(page === 'admin')} shrink-0`} data-testid="pm-tab-admin">
           Admin Tasks
         </button>
+        {includePeople ? (
+          <button type="button" onClick={() => setPage('people')} className={`${tabClass(page === 'people')} shrink-0`} data-testid="pm-tab-people">
+            People
+          </button>
+        ) : null}
       </nav>
     </header>
   )
@@ -85,17 +91,20 @@ export default function PmTrackerChrome({ children }) {
   }, [employeePage])
 
   const role = useMemo(() => resolvePmRoleKey(kf?.user, 'employee'), [kf?.user])
+  const isAdmin = role === 'admin'
   const isPm = role === 'pm'
 
   if (!sdkFailed) return children
   if (!identityReady) return children
 
-  if (isPm) {
+  if (isAdmin || isPm) {
     return (
       <div className="flex min-h-screen flex-col bg-[#f4f6fb] text-slate-800">
-        <PmHeader page={pmPage} setPage={setPmPage} />
+        <PmHeader page={pmPage} setPage={setPmPage} includePeople={isAdmin} />
         <div className="min-w-0 flex-1">
-          {pmPage === 'admin' ? <AdminTasks /> : <UserSpecificPT useLayout={false} />}
+          {pmPage === 'admin' ? <AdminTasks /> : null}
+          {pmPage === 'people' && isAdmin ? <PeopleDirectory /> : null}
+          {pmPage === 'home' ? <UserSpecificPT useLayout={false} /> : null}
         </div>
       </div>
     )

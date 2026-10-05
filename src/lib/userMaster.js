@@ -3,6 +3,8 @@
  * GET /api/v1/user-master?status=all&page=&page_size=
  */
 
+import { trackerRoleFromDirectory } from './trackerRole.js'
+
 const USER_MASTER_TOKEN = String(import.meta.env.VITE_USER_MASTER_TOKEN || '').trim();
 const USER_MASTER_URL = String(
   import.meta.env.VITE_USER_MASTER_URL || 'https://refexone.com/api/v1/user-master',
@@ -45,6 +47,8 @@ export function mapUserMasterPerson(row) {
   const id = String(row.id || row.user_id || '').trim();
   if (!email && !id && !name) return null;
   const firstName = String(row.first_name || name.split(/\s+/)[0] || 'User').trim();
+  const designation = String(row.designation || '').trim();
+  const directoryRole = String(row.directoryRole || row.role || '').trim();
   return {
     ...row,
     _id: id ? `iam:${id}` : '',
@@ -53,7 +57,10 @@ export function mapUserMasterPerson(row) {
     email,
     FirstName: firstName,
     LastName: String(row.last_name || '').trim(),
-    Role: String(row.designation || row.title || row.role || '').trim(),
+    Role: designation,
+    designation,
+    directoryRole,
+    trackerRole: row.trackerRole || trackerRoleFromDirectory({ role: directoryRole, designation }),
     _external: true,
     _user_master: true,
   };

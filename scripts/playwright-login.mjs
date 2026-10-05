@@ -37,7 +37,7 @@ await page.getByTestId(`pm-login-user-${EMAIL}`).click()
 await page.getByTestId('pm-login-selected').waitFor({ timeout: 8000 })
 await page.screenshot({ path: join(OUT, '00-login-selected.png'), fullPage: true })
 
-await page.getByRole('button', { name: /^Employee\b/ }).click()
+await page.getByTestId('pm-login-role').waitFor({ timeout: 8000 })
 await page.getByTestId('pm-non-kf-continue').click()
 await page.getByTestId('pm-standalone-banner').waitFor({ timeout: 20000 })
 await page.screenshot({ path: join(OUT, '00-login-signed-in.png'), fullPage: true })

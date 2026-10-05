@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
+import { persistDirectorySession } from '../lib/directorySession.js'
 import { KF_PM_TRACKER_APP_NAME } from '../lib/kfPmApp.js'
-import { PM_ROLE_OPTIONS, labelForPmRole, resolvePmRoleKey } from '../lib/pmRoles.js'
+import { labelForPmRole } from '../lib/pmRoles.js'
+import { trackerRoleFromDirectory } from '../lib/trackerRole.js'
 import {
   fetchUserMasterUsers,
   filterUserMasterUsers,
   isUserMasterConfigured,
   lookupUserMasterByEmail,
+  mapUserMasterPerson,
   userMasterOptionLabel,
 } from '../lib/userMaster.js'
 import PtUserAvatar from './PtUserAvatar.jsx'
@@ -20,11 +23,22 @@ function departmentOf(person) {
   ).trim()
 }
 
+function roleOf(person) {
+  return (
+    person?.trackerRole ||
+    trackerRoleFromDirectory({
+      role: person?.directoryRole,
+      designation: person?.designation || person?.Role,
+    })
+  )
+}
+
 function selectPerson(person, setQuery, setSelected, setPmRole) {
   if (!person) return
-  setSelected(person)
-  setQuery(userMasterOptionLabel(person))
-  setPmRole(resolvePmRoleKey({ Role: person.Role, title: person.Role }, 'employee'))
+  const mapped = person.Name ? person : mapUserMasterPerson(person)
+  setSelected(mapped)
+  setQuery(userMasterOptionLabel(mapped))
+  setPmRole(roleOf(mapped))
 }
 
 export default function NonKissflowIdentityGate({ onContinue, error }) {
@@ -37,6 +51,7 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
   const [busy, setBusy] = useState(false)
   const [localError, setLocalError] = useState('')
   const [openList, setOpenList] = useState(false)
+  const [apiReady, setApiReady] = useState(false)
 
   const loadDirectory = async () => {
     setLoadingDirectory(true)
@@ -59,12 +74,59 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
   }
 
   useEffect(() => {
-    loadDirectory()
+    let cancelled = false
+    ;(async () => {
+      try {
+        const res = await fetch('/api/pm/health')
+        if (!res.ok) throw new Error('Directory API is not ready')
+        if (!cancelled) {
+          setApiReady(true)
+          setLoadingDirectory(false)
+        }
+      } catch {
+        if (!cancelled) loadDirectory()
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
+  useEffect(() => {
+    if (!apiReady || selected) return undefined
+    const needle = query.trim()
+    if (needle.length < 2) {
+      setUsers([])
+      return undefined
+    }
+    let cancelled = false
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/pm/search?q=${encodeURIComponent(needle)}&limit=8`)
+        const data = await res.json()
+        if (cancelled) return
+        setUsers((Array.isArray(data.people) ? data.people : []).map((person) => mapUserMasterPerson({
+          ...person,
+          full_name: person.name,
+          email: person.email,
+          role: person.directoryRole,
+          designation: person.designation,
+          trackerRole: person.trackerRole,
+        })))
+        setDirectoryError('')
+      } catch (err) {
+        if (!cancelled) setDirectoryError(err?.message || 'Could not search User Master.')
+      }
+    }, 200)
+    return () => {
+      cancelled = true
+      clearTimeout(timer)
+    }
+  }, [apiReady, query, selected])
+
   const matches = useMemo(
-    () => filterUserMasterUsers(users, query, 10),
-    [users, query],
+    () => (apiReady ? users : filterUserMasterUsers(users, query, 10)),
+    [apiReady, users, query],
   )
 
   const handleSubmit = async (event) => {
@@ -96,13 +158,27 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
       return
     }
 
+    let assignedRole = roleOf(person)
+    setPmRole(assignedRole)
     setBusy(true)
     try {
+      const loginRes = await fetch('/api/pm/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: String(person.Email).trim().toLowerCase() }),
+      })
+      if (loginRes.ok) {
+        const loginBody = await loginRes.json()
+        persistDirectorySession(loginBody.token)
+        if (loginBody.person?.trackerRole) assignedRole = loginBody.person.trackerRole
+      } else {
+        persistDirectorySession('')
+      }
       await onContinue({
         email: String(person.Email).trim().toLowerCase(),
         name: person.Name || person.Email,
-        pmRole,
-        title: labelForPmRole(pmRole),
+        pmRole: assignedRole,
+        title: labelForPmRole(assignedRole),
         source: 'user-master',
         kissflowUserId: String(person.kissflow_user_id || person.kissflowUserId || '').trim(),
       })
@@ -123,8 +199,7 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
               </p>
               <h1 className="mt-3 text-2xl font-semibold leading-tight">{KF_PM_TRACKER_APP_NAME}</h1>
               <p className="mt-3 max-w-sm text-sm leading-relaxed text-sky-100/80">
-                Sign in with your User Master profile. Projects, tasks and subtasks follow the person
-                you pick from the directory.
+                Sign in with your work email. Employee, Project Manager, and Admin come from User Master.
               </p>
             </div>
             <ul className="space-y-3 text-sm text-sky-100/85">
@@ -138,7 +213,7 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
               </li>
               <li className="flex items-start gap-2">
                 <i className="ri-layout-grid-line mt-0.5 text-sky-300" aria-hidden />
-                Open Employee or Project Manager workspace
+                Role is assigned from User Master
               </li>
             </ul>
           </aside>
@@ -156,9 +231,9 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
               </div>
             </div>
 
-            <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">Sign in with User Master</h2>
+            <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">Sign in</h2>
             <p className="mt-1 text-sm text-slate-500">
-              Find yourself in the Refex One directory, then choose a workspace.
+              Use your Refex One work email. Your role is taken from User Master.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-5" data-testid="pm-non-kf-identity-form">
@@ -234,6 +309,9 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
                     <p className="truncate text-[11px] text-slate-400">
                       {[selected.Role, departmentOf(selected)].filter(Boolean).join(' · ') || 'User Master'}
                     </p>
+                    <p className="mt-1 text-[11px] font-semibold text-sky-800" data-testid="pm-login-role">
+                      {labelForPmRole(pmRole || roleOf(selected))}
+                    </p>
                   </div>
                   <button
                     type="button"
@@ -248,29 +326,6 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
                   </button>
                 </div>
               ) : null}
-
-              <fieldset>
-                <legend className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Workspace
-                </legend>
-                <div className="grid grid-cols-2 gap-2">
-                  {PM_ROLE_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.key}
-                      type="button"
-                      onClick={() => setPmRole(opt.key)}
-                      className={`rounded-xl border px-3 py-2.5 text-left ${
-                        pmRole === opt.key
-                          ? 'border-[#1E88E5] bg-sky-50 font-semibold text-sky-800'
-                          : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                      }`}
-                    >
-                      <span className="block text-sm">{opt.label}</span>
-                      <span className="mt-0.5 block text-[11px] font-normal text-slate-500">{opt.hint}</span>
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
 
               {(localError || error || directoryError) && (
                 <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">

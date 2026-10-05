@@ -22,7 +22,8 @@ import {
   syntheticKissflowUser,
 } from '../lib/iamIdentity.js'
 import { lookupKissflowUserByEmail, lookupKissflowUserById } from '../lib/kfUserLookup.js'
-import { labelForPmRole, PM_ROLE_OPTIONS, resolvePmRoleKey } from '../lib/pmRoles.js'
+import { persistDirectorySession } from '../lib/directorySession.js'
+import { labelForPmRole, resolvePmRoleKey } from '../lib/pmRoles.js'
 import { KF_PM_TRACKER_APP_ID, KF_PM_TRACKER_APP_NAME } from '../lib/kfPmApp.js'
 import NonKissflowIdentityGate from '../components/NonKissflowIdentityGate.jsx'
 import Toast from '../components/base/Toast.jsx'
@@ -214,6 +215,7 @@ export function SDKWrapper(props) {
 
   const switchExternalIdentity = useCallback(() => {
     clearPmIdentity()
+    persistDirectorySession('')
     if (kf) kf.user = null
     setIdentityReady(false)
     setIsNonKissflowUser(false)
@@ -380,19 +382,9 @@ export function SDKWrapper(props) {
                     : 'Standalone mode — connected with access keys (not inside a Kissflow page).'}
                 {kfInstance?.user?.Email ? ` Signed in as ${kfInstance.user.Email}.` : ''}
               </span>
-              <label className="inline-flex min-h-8 items-center gap-1.5">
-                <span className="font-semibold">Workspace</span>
-                <select
-                  className="min-h-8 rounded-md border border-current/20 bg-white/80 px-2 py-1 text-xs font-semibold text-slate-800"
-                  value={resolvePmRoleKey(kfInstance?.user, 'employee')}
-                  onChange={(e) => applyPmWorkspaceRole(e.target.value)}
-                  data-testid="pm-role-switch"
-                >
-                  {PM_ROLE_OPTIONS.map((opt) => (
-                    <option key={opt.key} value={opt.key}>{opt.label}</option>
-                  ))}
-                </select>
-              </label>
+              <span className="inline-flex min-h-8 items-center font-semibold" data-testid="pm-role-label">
+                {labelForPmRole(resolvePmRoleKey(kfInstance?.user, 'employee'))}
+              </span>
               <button
                 type="button"
                 onClick={switchExternalIdentity}
