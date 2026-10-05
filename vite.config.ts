@@ -20,6 +20,11 @@ export default defineConfig(({ mode }) => {
     "https://refexgroup.kissflow.com";
   const kfLiveOrigin =
     env.VITE_KF_LIVE_API_ORIGIN || "https://refexgroup.kissflow.com";
+  const activeIsLive =
+    kfOrigin.includes("refexgroup.kissflow.com") &&
+    !kfOrigin.includes("development-refexgroup");
+  const devAccountId = env.VITE_KF_DEV_ACCOUNT_ID || "AcCMptp3yqcn";
+  const liveAccountId = env.VITE_KF_LIVE_ACCOUNT_ID || "AcCMptlq60zH";
 
   return {
   define: {
@@ -207,14 +212,24 @@ export default defineConfig(({ mode }) => {
         },
       },
       "/kf-dev": {
-        target: "https://development-refexgroup.kissflow.com",
+        target: activeIsLive
+          ? kfLiveOrigin
+          : env.VITE_KF_DEV_API_ORIGIN || "https://development-refexgroup.kissflow.com",
         changeOrigin: true,
         secure: true,
-        rewrite: (path) => path.replace(/^\/kf-dev/, ""),
+        rewrite: (path) => {
+          const stripped = path.replace(/^\/kf-dev/, "");
+          if (!activeIsLive) return stripped;
+          return stripped.replaceAll(devAccountId, liveAccountId);
+        },
         configure(proxy) {
           proxy.on("proxyReq", (proxyReq) => {
-            const keyId = env.VITE_KF_ACCESS_KEY_ID || "";
-            const keySecret = env.VITE_KF_ACCESS_KEY_SECRET || "";
+            const keyId = activeIsLive
+              ? env.VITE_KF_LIVE_ACCESS_KEY_ID || env.VITE_KF_ACCESS_KEY_ID || ""
+              : env.VITE_KF_DEV_ACCESS_KEY_ID || env.VITE_KF_ACCESS_KEY_ID || "";
+            const keySecret = activeIsLive
+              ? env.VITE_KF_LIVE_ACCESS_KEY_SECRET || env.VITE_KF_ACCESS_KEY_SECRET || ""
+              : env.VITE_KF_DEV_ACCESS_KEY_SECRET || env.VITE_KF_ACCESS_KEY_SECRET || "";
             if (keyId && keySecret) {
               proxyReq.setHeader("X-Access-Key-Id", keyId);
               proxyReq.setHeader("X-Access-Key-Secret", keySecret);

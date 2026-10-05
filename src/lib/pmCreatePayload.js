@@ -81,8 +81,6 @@ const PROJECT_KEYS = new Set([
   'Company_Name',
   'Project_Type',
   'Project_Category',
-  'Functions',
-  'Project_Status',
   'Priority_1',
   'Start_Date',
   'End_Date',

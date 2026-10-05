@@ -2,10 +2,6 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import { KissflowSDKContext } from './sdk/context.jsx'
 import { KF_PM_TRACKER_APP_NAME } from './lib/kfPmApp.js'
 import { resolvePmRoleKey } from './lib/pmRoles.js'
-import {
-  openSatelliteCreate,
-  PROJECT_TASK_SATELLITE_OPTIONS,
-} from './lib/kfSatelliteCreate.js'
 import UserHubProjectsPage from './UserHubProjectsPage.jsx'
 import UserHubTasksPage from './UserHubTasksPage.jsx'
 import UserHubSubTasksPage from './UserHubSubTasksPage.jsx'
@@ -39,22 +35,7 @@ function tabClass(active) {
   }`
 }
 
-function PmKissflowHeader({ kf, page, setPage }) {
-  const [createOpen, setCreateOpen] = useState(false)
-  const [creating, setCreating] = useState(false)
-
-  const handleCreate = async (optionKey) => {
-    setCreateOpen(false)
-    setCreating(true)
-    try {
-      await openSatelliteCreate(kf, optionKey)
-    } catch (err) {
-      console.warn('Create failed:', err?.message || err)
-    } finally {
-      setCreating(false)
-    }
-  }
-
+function PmHeader({ page, setPage }) {
   return (
     <header className="border-b border-slate-200 bg-white">
       <TrackerTitle />
@@ -62,32 +43,6 @@ function PmKissflowHeader({ kf, page, setPage }) {
         <button type="button" onClick={() => setPage('home')} className={`${tabClass(page === 'home')} shrink-0`} data-testid="pm-tab-home">
           Home
         </button>
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setCreateOpen((open) => !open)}
-            disabled={creating}
-            className={`${tabClass(createOpen)} shrink-0`}
-          >
-            Create
-            <i className="ri-arrow-down-s-line text-base" aria-hidden />
-          </button>
-          {createOpen ? (
-            <div className="absolute left-0 top-full z-40 mt-1 w-44 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
-              {PROJECT_TASK_SATELLITE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.key}
-                  type="button"
-                  onClick={() => handleCreate(opt.key)}
-                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
-                >
-                  <i className={`${opt.icon} text-base text-slate-500`} aria-hidden />
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          ) : null}
-        </div>
         <button type="button" onClick={() => setPage('admin')} className={`${tabClass(page === 'admin')} shrink-0`} data-testid="pm-tab-admin">
           Admin Tasks
         </button>
@@ -96,7 +51,7 @@ function PmKissflowHeader({ kf, page, setPage }) {
   )
 }
 
-function EmployeeTrackerHeader({ page, setPage }) {
+function TrackerHeader({ page, setPage }) {
   return (
     <header className="border-b border-slate-200 bg-white">
       <TrackerTitle />
@@ -138,7 +93,7 @@ export default function PmTrackerChrome({ children }) {
   if (isPm) {
     return (
       <div className="flex min-h-screen flex-col bg-[#f4f6fb] text-slate-800">
-        <PmKissflowHeader kf={kf} page={pmPage} setPage={setPmPage} />
+        <PmHeader page={pmPage} setPage={setPmPage} />
         <div className="min-w-0 flex-1">
           {pmPage === 'admin' ? <AdminTasks /> : <UserSpecificPT useLayout={false} />}
         </div>
@@ -148,7 +103,7 @@ export default function PmTrackerChrome({ children }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f4f6fb] text-slate-800">
-      <EmployeeTrackerHeader page={employeePage} setPage={setEmployeePage} />
+      <TrackerHeader page={employeePage} setPage={setEmployeePage} />
       <div className="min-w-0 flex-1">
         {visitedEmployeePages.projects ? (
           <div className={employeePage === 'projects' ? 'min-w-0' : 'hidden'}>

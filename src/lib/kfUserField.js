@@ -39,6 +39,8 @@ export function reportAssigneeEmail(row) {
   return (
     asEmailText(row?.externalemail) ||
     asEmailText(raw.externalemail) ||
+    asEmailText(row?.externlemail) ||
+    asEmailText(raw.externlemail) ||
     asEmailText(row?.assignedToEmail) ||
     asEmailText(row?.assigneeEmail) ||
     asEmailText(raw.Assignee_Email_Extracted) ||
@@ -50,8 +52,50 @@ export function reportAssigneeEmail(row) {
     asEmailText(row?.Assignee_1) ||
     asEmailText(raw.Assignee_1) ||
     asEmailText(row?.Assigned_To) ||
-    asEmailText(raw.Assigned_To)
+    asEmailText(raw.Assigned_To) ||
+    asEmailText(row?.AssignedTo) ||
+    asEmailText(raw.AssignedTo)
   )
+}
+
+function kissflowAssigneeId(value) {
+  if (value == null || value === '') return ''
+  if (typeof value === 'string' || typeof value === 'number') {
+    const id = String(value).trim()
+    return /^Us[A-Za-z0-9_]+$/.test(id) ? id : ''
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const id = kissflowAssigneeId(item)
+      if (id) return id
+    }
+    return ''
+  }
+  if (typeof value === 'object') {
+    return kissflowAssigneeId(value._id || value.Id || value.id)
+  }
+  return ''
+}
+
+/**
+ * Dashboard row belongs to the signed-in user when AssignedTo / Assigned_To / Assignee_1
+ * is that Kissflow user, or when externalemail / externlemail equals the login email.
+ */
+export function rowMatchesCurrentAssignee(row, email, userId) {
+  const me = asEmailText(email).toLowerCase()
+  if (me && reportAssigneeEmail(row).toLowerCase() === me) return true
+  const mine = kissflowAssigneeId(userId)
+  if (!mine) return false
+  const raw = row?.raw && typeof row.raw === 'object' ? row.raw : {}
+  return [
+    row?.assignedToId,
+    row?.Assigned_To,
+    raw.Assigned_To,
+    row?.AssignedTo,
+    raw.AssignedTo,
+    row?.Assignee_1,
+    raw.Assignee_1,
+  ].some((value) => kissflowAssigneeId(value) === mine)
 }
 
 export function reportAssigneeName(row) {
@@ -101,6 +145,25 @@ export function isKissflowUserId(value) {
   const id = String(value || '').trim()
   if (!id || id.startsWith('iam:') || id.includes('@') || id.includes('-')) return false
   return /^Us[A-Za-z0-9_]+$/.test(id)
+}
+
+/**
+ * Login email → Kissflow user id for dashboard filters.
+ * User Master ids are not Kissflow. AssignedTo matching needs the Us… id.
+ */
+export async function resolveDashboardAssignee(kfInstance, email, userId) {
+  const me = asEmailText(email).toLowerCase()
+  const candidates = [userId, kfInstance?.user?._id, kfInstance?.user?.Id]
+  const known = candidates.map((value) => String(value || '').trim()).find((value) => isKissflowUserId(value))
+  if (known) return { email: me, userId: known }
+  if (!me) return { email: '', userId: '' }
+  try {
+    const row = await lookupKissflowUserByEmail(kfInstance, me, { allowWhenPaused: true, retries: 0 })
+    const id = isKissflowUserId(row?._id) ? String(row._id).trim() : ''
+    return { email: me, userId: id }
+  } catch {
+    return { email: me, userId: '' }
+  }
 }
 
 export function personPickerLabel(user) {

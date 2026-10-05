@@ -76,7 +76,7 @@ export async function createPmProcessDraft(kfInstance, entity, body = {}) {
       if (!parsed.instanceId) {
         throw new Error(`${entity.labels?.entitySingular || 'Item'} create API did not return an id`)
       }
-      created = { ...parsed, webhookOnly: false }
+      created = { ...parsed, accountId, webhookOnly: false }
     } catch (error) {
       if (!isAuthError(error)) throw error
       created.webhookOnly = true
@@ -183,6 +183,7 @@ async function putJsonThroughProxy(proxyPrefix, path, body, keyId, keySecret) {
   const res = await fetch(`${proxyPrefix}${path}`, {
     method: 'PUT',
     credentials: 'omit',
+    signal: AbortSignal.timeout(20000),
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -204,6 +205,7 @@ async function getJsonThroughProxy(proxyPrefix, path, keyId, keySecret) {
   const res = await fetch(`${proxyPrefix}${path}`, {
     method: 'GET',
     credentials: 'omit',
+    signal: AbortSignal.timeout(20000),
     headers: {
       Accept: 'application/json',
       ...buildKissflowAccessKeyHeaders(keyId, keySecret),
@@ -248,6 +250,17 @@ async function resolveActivityInstanceId(
 }
 
 function localProcessTenants() {
+  const active = getTenantAccessKeys(null)
+  const live = {
+    name: 'live',
+    proxy: '/kf-live',
+    accountId: KF_LIVE_ACCOUNT_ID,
+    keyId: KF_LIVE_ACCESS_KEY_ID || KF_ACCESS_KEY_ID,
+    keySecret: KF_LIVE_ACCESS_KEY_SECRET || KF_ACCESS_KEY_SECRET,
+  }
+  if (active.tenant === 'live') {
+    return [live].filter((tenant) => tenant.accountId && tenant.keyId && tenant.keySecret)
+  }
   return [
     {
       name: 'dev',
@@ -256,14 +269,12 @@ function localProcessTenants() {
       keyId: KF_ACCESS_KEY_ID,
       keySecret: KF_ACCESS_KEY_SECRET,
     },
-    {
-      name: 'live',
-      proxy: '/kf-live',
-      accountId: KF_LIVE_ACCOUNT_ID,
-      keyId: KF_LIVE_ACCESS_KEY_ID,
-      keySecret: KF_LIVE_ACCESS_KEY_SECRET,
-    },
+    live,
   ].filter((tenant) => tenant.accountId && tenant.keyId && tenant.keySecret)
+}
+
+function preferredProcessAccount(preferredAccountId) {
+  return String(preferredAccountId || '').trim() || getTenantAccessKeys(null).defaultAccountId || KF_DEV_ACCOUNT_ID
 }
 
 function orderProcessTenants(preferredAccountId) {
@@ -322,8 +333,8 @@ export async function loadPmProcessItem(kfInstance, entity, ids = {}) {
 
   if (isLocalVitePreview()) {
     const tenant =
-      (await locateProcessTenant(entity.processId, instanceId, preferredAccountId || KF_DEV_ACCOUNT_ID)) ||
-      orderProcessTenants(preferredAccountId || KF_DEV_ACCOUNT_ID)[0]
+      (await locateProcessTenant(entity.processId, instanceId, preferredProcessAccount(preferredAccountId))) ||
+      orderProcessTenants(preferredProcessAccount(preferredAccountId))[0]
     if (!tenant) return null
     const raw = await getJsonThroughProxy(
       tenant.proxy,
@@ -373,8 +384,8 @@ export async function savePmProcessItem(kfInstance, entity, body = {}, ids = {})
 
   if (isLocalVitePreview()) {
     const tenant =
-      (await locateProcessTenant(entity.processId, instanceId, preferredAccountId || KF_DEV_ACCOUNT_ID)) ||
-      orderProcessTenants(preferredAccountId || KF_DEV_ACCOUNT_ID)[0]
+      (await locateProcessTenant(entity.processId, instanceId, preferredProcessAccount(preferredAccountId))) ||
+      orderProcessTenants(preferredProcessAccount(preferredAccountId))[0]
     if (!tenant) throw new Error('Kissflow account not ready')
     parsedRaw = unwrapKfCreateResponse(
       await putProcessItemThroughProxy(
@@ -445,6 +456,7 @@ async function postJsonThroughProxy(proxyPrefix, path, body, keyId, keySecret) {
   const res = await fetch(`${proxyPrefix}${path}`, {
     method: 'POST',
     credentials: 'omit',
+    signal: AbortSignal.timeout(20000),
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -488,8 +500,8 @@ export async function submitPmProcessItem(kfInstance, entity, ids = {}) {
   try {
     if (isLocalVitePreview()) {
       const tenant =
-        (await locateProcessTenant(entity.processId, instanceId, preferredAccountId || KF_DEV_ACCOUNT_ID)) ||
-        orderProcessTenants(preferredAccountId || KF_DEV_ACCOUNT_ID)[0]
+        (await locateProcessTenant(entity.processId, instanceId, preferredProcessAccount(preferredAccountId))) ||
+        orderProcessTenants(preferredProcessAccount(preferredAccountId))[0]
       if (!tenant) return { ok: false, reason: 'no-tenant' }
       let progress = null
       try {
@@ -572,8 +584,8 @@ async function adminCompletePmProcessItem(kfInstance, entity, ids = {}) {
   try {
     if (isLocalVitePreview()) {
       const tenant =
-        (await locateProcessTenant(entity.processId, instanceId, preferredAccountId || KF_DEV_ACCOUNT_ID)) ||
-        orderProcessTenants(preferredAccountId || KF_DEV_ACCOUNT_ID)[0]
+        (await locateProcessTenant(entity.processId, instanceId, preferredProcessAccount(preferredAccountId))) ||
+        orderProcessTenants(preferredProcessAccount(preferredAccountId))[0]
       if (!tenant) return { ok: false, reason: 'no-tenant' }
       const raw = await postJsonThroughProxy(
         tenant.proxy,
@@ -655,6 +667,20 @@ export async function createPmCaseDraft(kfInstance, entity, body = {}) {
   const tenant = getTenantAccessKeys(kfInstance)
   const useWebhookOnly = tenant.tenant === 'dev' && isLocalVitePreview()
   const fields = sanitizeCreateFields('project', body)
+  const restBody = draftBodyForApi(fields)
+  for (const key of [
+    'Functions',
+    'Project_Status',
+    'Assignee_Name',
+    'Assignee_Email',
+    'Assignee_Email_Extracted',
+    'Requester Email',
+    'Requester_Email',
+    'Requester_Name',
+    'Created_by_flat_field_email',
+  ]) {
+    delete restBody[key]
+  }
   let created = { instanceId: '', raw: null, webhookOnly: false }
 
   if (!useWebhookOnly) {
@@ -662,7 +688,7 @@ export async function createPmCaseDraft(kfInstance, entity, body = {}) {
       const path = `/case/2/${accountId}/${entity.caseId}`
       const raw = await kfMutateJson(kfInstance, path, {
         method: 'POST',
-        body: draftBodyForApi(fields),
+        body: restBody,
         preferSessionAuth: true,
       })
 

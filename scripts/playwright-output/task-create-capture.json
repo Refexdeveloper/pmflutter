@@ -1,0 +1,27 @@
+{
+  "taskName": "Prod curl sample 1790857147326",
+  "calls": [
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/process/2/AcCMptlq60zH/Project_Sub_Task_A01?_application_id=Project_Management_A01",
+      "body": "{}",
+      "status": 200,
+      "response": "{\"_id\":\"PkEI7487V18b\",\"ModelId\":\"Project_Sub_Task_A01\",\"_activity_instance_id\":\"PkEI7488ILRN\",\"_meta_version\":\"1790845599536954\"}\n"
+    },
+    {
+      "method": "PUT",
+      "url": "http://localhost:3000/kf-dev/process/2/AcCMptp3yqcn/admin/Project_Sub_Task_A01/PkEI7487V18b?_application_id=Project_Management_Tracker_A00",
+      "body": "{\"_id\":\"PkEI7487V18b\",\"Sub_Task_Name\":\"Prod curl sample 1790857147326\",\"Task_Priority\":\"High\",\"Start_Date\":\"2026-10-01\",\"End_Date\":\"2026-10-07\",\"Task_Status\":\"Open\",\"Project\":\"Individual Task\",\"Is_Dependent_on_another_Task\":false,\"Assigned_To\":{\"Kind\":\"User\",\"_id\":\"UsDTb7E7dFmW\",\"Name\":\"Aravind\",\"Email\":\"aravind.srinivasan@refex.co.in\"},\"Requester_Email\":\"aravind.srinivasan@refex.co.in\",\"Created_by_flat_field_email\":\"aravind.srinivasan@refex.co.in\"}",
+      "status": 200,
+      "response": "{\"Sub_Task_Name\":\"Prod curl sample 1790857147326\",\"Task_Priority\":\"High\",\"Start_Date\":\"2026-10-01\",\"End_Date\":\"2026-10-07\",\"Assigned_To\":{\"_id\":\"UsDTb7E7dFmW\",\"Name\":\"Aravind\",\"Kind\":\"User\"},\"Requester_Email\":\"aravind.srinivasan@refex.co.in\",\"_modified_at\":\"2026-10-01T12:19:17Z\",\"Name\":\"Prod curl sample 1790857147326 from \",\"TAT_Days\":5,\"L1_Manager_Email\":\"gowtham.s@refex.co.in\",\"Today\":\"2026-10-01T12:19:17Z\",\"Aging_Days\":0,\"_id\":\"PkEI7487V18b\"}\n"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/kf-dev/process/2/AcCMptp3yqcn/Project_Sub_Task_A01/PkEI7487V18b/PkEI7488ILRN/submit?_application_id=Project_Management_Tracker_A00",
+      "body": "{\"_id\":\"PkEI7487V18b\"}",
+      "status": 200,
+      "response": "{\"success\":\"Submitted successfully\"}\n"
+    }
+  ],
+  "bodySnippet": "Standalone mode — connected with access keys (not inside a Kissflow page). Signed in as aravind.srinivasan@refex.co.in.\nWorkspace\nEmployee\nProject Manager\nSwitch user\nProject Management Tracker\nProjects\nTasks\nSubTasks\nA\n\nGood evening, Aravind\n\nYour tasks · Employee · aravind.srinivasan@refex.co.in\n\nPERIOD\nAll time\nTask Insights\n\nTOTAL TASKS\n\n0\n\nAcross all active projects\n\n0 tracked\n\nClick to view →\n\nOPEN TASKS\n\n0\n\n0% of total tasks\n\n0 pending\n\nClick to view →\n\nCOMPLETED TASKS\n\n0\n\n0% task completion rate\n\n0 closed\n\nClick to view →\n\nOVERDUE TASKS\n\n0\n\nRequires immediate action\n\n0 overdue\n\nClick to view →\n\nTask Health Monitor\nCOMPLETED\n\n0\n\n0% of tasks\n\nOPEN\n\n0\n\n0% of tasks\n\nHIGH PRIORITY\n\n0\n\n0% of tasks\n\nDELAYED TASKS\n\n0\n\n0% with delay days\n\nTasks Assigned to me\n0\nTasks Created by Me\n3\nOpen\n0\n"
+}

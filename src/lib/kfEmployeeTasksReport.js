@@ -3,15 +3,18 @@
  * https://development-refexgroup.kissflow.com/appbuilder/Project_Management_Tracker_A00/page/Employee_Tasks_A01
  *
  * GET /process-report/2/{account}/Project_Sub_Task_A01/pm_external_report_A00
- *   $assignee_email  = login email → Tasks Assigned to me
- *   $requester_email = login email → Tasks Created by Me
+ * Assigned to me is filtered in the app: Assigned_To is the login Kissflow user,
+ * or externalemail equals the login email.
+ * $assignee_email on this report only returns the externalemail match, so the
+ * assigned list is loaded without that parameter.
+ * $requester_email = login email → Tasks Created by Me
  */
 
 import { fetchAllAdminProcessItems, kfGetJson } from './kfRuntime.js'
 import { KF_PM_TRACKER_APP_ID } from './kfPmApp.js'
 import { mapEmployeeTaskRow } from './kfTaskTracker.js'
 import { cacheKey, getCachedOrLoad, invalidateListCache } from './kfListCache.js'
-import { reportAssigneeEmail } from './kfUserField.js'
+import { reportAssigneeEmail, resolveDashboardAssignee, rowMatchesCurrentAssignee } from './kfUserField.js'
 import {
   buildReportFieldMaps,
   fetchReportPages as fetchEmployeeReportPages,
@@ -73,9 +76,6 @@ export function buildEmployeeTasksReportPath(kfInstance, options = {}) {
 
   const suffix = count ? '/count' : ''
   const parts = []
-  if (email && (scope === 'assigned' || scope === 'both')) {
-    parts.push(`$assignee_email=${encodeURIComponent(email)}`)
-  }
   if (email && (scope === 'created' || scope === 'both')) {
     parts.push(`$requester_email=${encodeURIComponent(email)}`)
   }
@@ -218,22 +218,27 @@ export async function fetchEmployeeTasksByScope(kfInstance, options = {}) {
   if (!email || !email.includes('@')) {
     return { email: '', scope, rows: [] }
   }
+  const assignee = await resolveDashboardAssignee(kfInstance, email, options.userId)
 
-  const key = cacheKey('emp-tasks-report', scope, email)
+  const key = cacheKey('emp-tasks-report-v5', scope, assignee.email, assignee.userId)
   if (options.bust) invalidateListCache(key)
 
   return getCachedOrLoad(key, async () => {
     const fromAdmin = async () => {
-      const fallback = await fetchEmployeeTasksFromAdminList(kfInstance, email)
+      const fallback = await fetchEmployeeTasksFromAdminList(kfInstance, assignee.email, assignee.userId)
       return {
-        email,
+        email: assignee.email,
         scope,
         rows: scope === 'created' ? fallback.created : fallback.assigned,
       }
     }
     try {
       const page = await fetchReportPages(kfInstance, { email, scope })
-      return { email, scope, rows: mapReportScopeRows(page) }
+      const mapped = mapReportScopeRows(page)
+      const rows = scope === 'created'
+        ? mapped.filter((row) => emailsMatch(row.requesterEmail || row.raw?.requester_email, assignee.email))
+        : mapped.filter((row) => rowMatchesCurrentAssignee(row, assignee.email, assignee.userId))
+      return { email: assignee.email, scope, rows }
     } catch (error) {
       console.warn(`Employee ${scope} report failed:`, error?.message || error)
       return fromAdmin()
@@ -241,11 +246,11 @@ export async function fetchEmployeeTasksByScope(kfInstance, options = {}) {
   })
 }
 
-async function fetchEmployeeTasksFromAdminList(kfInstance, email) {
-  return getCachedOrLoad(cacheKey('emp-tasks-admin', email), () => loadEmployeeTasksFromAdminList(kfInstance, email))
+async function fetchEmployeeTasksFromAdminList(kfInstance, email, userId) {
+  return getCachedOrLoad(cacheKey('emp-tasks-admin-v2', email, userId), () => loadEmployeeTasksFromAdminList(kfInstance, email, userId))
 }
 
-async function loadEmployeeTasksFromAdminList(kfInstance, email) {
+async function loadEmployeeTasksFromAdminList(kfInstance, email, userId) {
   const raw = await fetchAllAdminProcessItems(kfInstance, EMP_TASK_PROCESS_ID, {
     applyPreference: false,
     accountId: EMP_TASK_ACCOUNT_ID,
@@ -255,12 +260,7 @@ async function loadEmployeeTasksFromAdminList(kfInstance, email) {
   const mapped = raw
     .map((row, idx) => mapHydratedRow(hydrateReportRow(row, []), idx))
     .filter(Boolean)
-  const userId = String(kfInstance?.user?._id || '').trim()
-  const assigned = mapped.filter((row) => {
-    if (emailsMatch(row.assignedToEmail || row.raw?.externalemail || row.raw?.assignee_email, email)) return true
-    const assigneeId = String(row.assignedToId || row.raw?.Assigned_To?._id || '').trim()
-    return Boolean(userId && assigneeId && assigneeId === userId)
-  })
+  const assigned = mapped.filter((row) => rowMatchesCurrentAssignee(row, email, userId))
   const created = filterByLoginEmail(
     mapped,
     email,

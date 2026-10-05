@@ -2,8 +2,9 @@
  * Employee hub subtasks — Kissflow process report
  *
  * GET /process-report/2/AcCMptp3yqcn/Sub_Task_Process_A00/pm_subtask_A00
- *   $assignee_email  = login email → Subtasks Assigned to me
- *   $requester_email = login email → Subtasks Created by Me
+ * Assigned to me is filtered in the app: Assignee_1 is the login Kissflow user,
+ * or Assignee_Email / externalemail equals the login email.
+ * $requester_email = login email → Subtasks Created by Me
  *
  * Assignee is `externalemail` when Assignee_1 / Assigned_To is missing.
  */
@@ -11,7 +12,7 @@
 import { KF_PM_TRACKER_APP_ID } from './kfPmApp.js'
 import { mapAdminSubtaskRow, fetchSubtaskProcessData } from './kfSubtaskTracker.js'
 import { cacheKey, getCachedOrLoad, invalidateListCache } from './kfListCache.js'
-import { reportAssigneeEmail } from './kfUserField.js'
+import { reportAssigneeEmail, resolveDashboardAssignee, rowMatchesCurrentAssignee } from './kfUserField.js'
 import { loginEmailOf } from './kfEmployeeTasksReport.js'
 import { rowRequesterEmail } from './pmRequesterScope.js'
 import {
@@ -48,9 +49,6 @@ export function buildEmployeeSubtasksReportPath(kfInstance, options = {}) {
 
   const suffix = count ? '/count' : ''
   const parts = []
-  if (email && (scope === 'assigned' || scope === 'both')) {
-    parts.push(`$assignee_email=${encodeURIComponent(email)}`)
-  }
   if (email && (scope === 'created' || scope === 'both')) {
     parts.push(`$requester_email=${encodeURIComponent(email)}`)
   }
@@ -154,8 +152,9 @@ export async function fetchEmployeeSubtasksByScope(kfInstance, options = {}) {
   if (!email || !email.includes('@')) {
     return { email: '', scope, rows: [] }
   }
+  const assignee = await resolveDashboardAssignee(kfInstance, email, options.userId)
 
-  const key = cacheKey('emp-subtasks-report', scope, email)
+  const key = cacheKey('emp-subtasks-report-v4', scope, assignee.email, assignee.userId)
   if (options.bust) invalidateListCache(key)
 
   return getCachedOrLoad(key, async () => {
@@ -164,13 +163,17 @@ export async function fetchEmployeeSubtasksByScope(kfInstance, options = {}) {
     const mine = email.toLowerCase()
     const rows = (Array.isArray(fallback) ? fallback : []).filter((row) => {
       if (scope === 'created') return rowRequesterEmail(row) === mine
-      return reportAssigneeEmail(row).toLowerCase() === mine
+      return rowMatchesCurrentAssignee(row, assignee.email, assignee.userId)
     })
     return { email, scope, rows }
   }
     try {
       const page = await fetchReportPages(kfInstance, { email, scope })
-      return { email, scope, rows: mapReportScopeRows(page) }
+      const mapped = mapReportScopeRows(page)
+      const rows = scope === 'created'
+        ? mapped.filter((row) => rowRequesterEmail(row) === assignee.email)
+        : mapped.filter((row) => rowMatchesCurrentAssignee(row, assignee.email, assignee.userId))
+      return { email: assignee.email, scope, rows }
     } catch (error) {
       console.warn(`Employee ${scope} subtasks report failed:`, error?.message || error)
       return fromAdmin()

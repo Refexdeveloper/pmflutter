@@ -7,14 +7,15 @@
  * Project_Management_A01 is a case, so process-report may 403; fall back to
  * /case-report/2/…/externalreport_A00 (same report id).
  *
- * Show rows where login email equals `externlemail` (Kissflow field id).
- * Do not invent a Kissflow owner object from that email.
+ * Show a project when AssignedTo is the login Kissflow user, or externlemail
+ * equals the login email. Do not invent a Kissflow owner from that email.
  */
 
 import { KF_PM_CASE_ID, KF_PM_TRACKER_APP_ID } from './kfPmApp.js'
-import { mapItemsToProjectRows } from './kfProjectDashboard.js'
+import { fetchProjectListSummary, mapItemsToProjectRows } from './kfProjectDashboard.js'
 import { cacheKey, getCachedOrLoad } from './kfListCache.js'
 import { loginEmailOf } from './kfEmployeeTasksReport.js'
+import { resolveDashboardAssignee, rowMatchesCurrentAssignee } from './kfUserField.js'
 import { isLocalVitePreview } from './kfRuntime.js'
 import {
   buildReportFieldMaps,
@@ -35,12 +36,6 @@ const toText = reportFieldText
 const buildFieldMaps = buildReportFieldMaps
 const readRowField = readReportRowField
 
-function emailsMatch(left, right) {
-  const a = normalizeEmail(left)
-  const b = normalizeEmail(right)
-  return Boolean(a && b && a === b)
-}
-
 function reportExternalEmail(row) {
   return (
     normalizeEmail(row?.externlemail) ||
@@ -57,12 +52,11 @@ function reportExternalEmail(row) {
  */
 export function buildEmployeeProjectsReportPath(_kfInstance, options = {}) {
   const kind = options.kind === 'case-report' ? 'case-report' : 'process-report'
-  const email = String(options.email || '').trim()
   const page = Math.max(1, Number(options.page) || 1)
   const pageSize = Math.max(1, Number(options.pageSize) || EMP_PROJECT_PAGE_SIZE)
-  const parts = []
-  if (email) parts.push(`$externlemail=${encodeURIComponent(email)}`)
-  parts.push(`_application_id=${encodeURIComponent(EMP_PROJECT_APP_ID)}`)
+  const parts = [
+    `_application_id=${encodeURIComponent(EMP_PROJECT_APP_ID)}`,
+  ]
   parts.push(`page_number=${page}`)
   parts.push(`page_size=${pageSize}`)
   return `/${kind}/2/${EMP_PROJECT_ACCOUNT_ID}/${EMP_PROJECT_CASE_ID}/${EMP_PROJECT_REPORT_ID}?${parts.join('&')}`
@@ -130,22 +124,33 @@ async function fetchProjectReportPages(kfInstance, options) {
 /**
  * Load externalreport_A00 and keep rows where login email === externlemail.
  */
+function rowsForLoginAssignee(items, email, userId) {
+  return (Array.isArray(items) ? items : []).filter((row) => rowMatchesCurrentAssignee(row, email, userId))
+}
+
 export async function fetchEmployeeDashboardProjects(kfInstance, options = {}) {
   const email = loginEmailOf(kfInstance, options.email)
   if (!email || !email.includes('@')) {
     return { email: '', rows: [], subtasks: [], listItems: [], fieldIds: null, accountId: EMP_PROJECT_ACCOUNT_ID }
   }
+  const assignee = await resolveDashboardAssignee(kfInstance, email, options.userId)
 
-  return getCachedOrLoad(cacheKey('emp-projects-report', email, options.bust ? 'bust' : ''), async () => {
-    const page = await fetchProjectReportPages(kfInstance, {
-      email,
-      pageSize: EMP_PROJECT_PAGE_SIZE,
-    })
-    const hydrated = (page.rows || []).map((row) => hydrateReportRow(row, page.columns))
-    const matched = hydrated.filter((row) => emailsMatch(reportExternalEmail(row), email))
+  return getCachedOrLoad(cacheKey('emp-projects-report-v2', assignee.email, assignee.userId, options.bust ? 'bust' : ''), async () => {
+    let matched = []
+    try {
+      const page = await fetchProjectReportPages(kfInstance, {
+        pageSize: EMP_PROJECT_PAGE_SIZE,
+      })
+      const hydrated = (page.rows || []).map((row) => hydrateReportRow(row, page.columns))
+      matched = rowsForLoginAssignee(hydrated, assignee.email, assignee.userId)
+    } catch (error) {
+      console.warn('Employee project report failed:', error?.message || error)
+      const summary = await fetchProjectListSummary(kfInstance)
+      matched = rowsForLoginAssignee(summary?.listItems, assignee.email, assignee.userId)
+    }
     const rows = mapProjectReportRows(matched)
     return {
-      email,
+      email: assignee.email,
       rows,
       subtasks: rows.flatMap((row) => row.subtasks || []),
       listItems: matched,
