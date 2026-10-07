@@ -57,7 +57,7 @@ export default function TaskDetailsForm({ kf, defaults = {}, onClose }) {
   const [taskName, setTaskName] = useState(() => String(defaults.taskName || '').trim())
   const [priority, setPriority] = useState(() => String(defaults.priority || '').trim())
   const [project] = useState(defaults.projectName || 'Individual Task')
-  const [taskType, setTaskType] = useState(() => String(defaults.taskType || '').trim())
+  const [taskType, setTaskType] = useState(() => String(defaults.taskType || 'New').trim() || 'New')
   const [entity, setEntity] = useState(() => String(defaults.entity || '').trim())
   const [dependent, setDependent] = useState(() => Boolean(defaults.dependent))
   const [dependentOn, setDependentOn] = useState(() => String(defaults.dependentOn || '').trim())
@@ -212,9 +212,7 @@ export default function TaskDetailsForm({ kf, defaults = {}, onClose }) {
         : await finalizePmProcessCreate(kf, TASKS_ENTITY, body, await createPmProcessDraft(kf, TASKS_ENTITY, body))
       kf?.client?.showInfo?.(
         created.webhookOnly
-          ? isUpdate
-            ? 'Task update sent to development Kissflow.'
-            : 'Task sent to development Kissflow.'
+          ? 'Task sent to the Kissflow integration.'
           : isUpdate && isProcessCompleteStatus(status) && created.submitted
             ? `Task completed in Kissflow (${created.instanceId}).`
             : isUpdate && isProcessCompleteStatus(status)

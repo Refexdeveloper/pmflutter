@@ -10,7 +10,7 @@ import {
   resolveKissflowDirectoryStatus,
   resolveKissflowUserField,
 } from '../lib/kfUserField.js'
-import { resolvePmBotUser } from '../lib/kfBotUser.js'
+import { useProjectFunctions } from '../lib/kfProjectFormDropdowns.js'
 import { PROJECTS_ENTITY } from '../lib/pmMyItemsEntities.js'
 import { notifyProjectDetailsSaved } from '../lib/pmProjectDetails.js'
 import { useUserMasterOptions } from '../lib/useUserMasterOptions.js'
@@ -18,12 +18,11 @@ import AssigneeStatusTags from './AssigneeStatusTags.jsx'
 import CreateDetailsPopup from './CreateDetailsPopup.jsx'
 
 const COMPANIES = ['Refex', 'Refex Group', 'Refex Industries Limited', 'Refex Renewables']
-const PROJECT_TYPES = ['New', 'CR', 'Enhancement', 'Maintenance']
-const FUNCTIONS = ['Information Technology', 'Operations', 'Finance', 'HR', 'Sales']
-const STATUSES = ['Planning', 'Active', 'On Hold', 'Completed']
+const PROJECT_TYPES = ['Tech', 'Non-tech']
+const STATUSES = ['Open', 'Closed']
 const PRIORITIES = ['High', 'Medium', 'Low']
 const RISKS = ['High', 'Medium', 'Low']
-const GOVERNANCE = ['Weekly', 'Fortnightly', 'Monthly', 'Quarterly']
+const GOVERNANCE = ['Daily', 'Weekly', 'Bi-weekly', 'Monthly']
 
 const inputClass =
   'h-10 w-full rounded border border-slate-300 bg-white px-3 text-sm text-slate-800 outline-none focus:border-[#1E62F0]'
@@ -77,10 +76,10 @@ export default function ProjectDetailsForm({ kf, defaults = {}, onClose }) {
   const user = kf?.user
   const [projectName, setProjectName] = useState(defaults.projectName || '')
   const [companyName, setCompanyName] = useState('')
-  const [projectType, setProjectType] = useState('')
+  const [projectType, setProjectType] = useState('Tech')
   const [functions, setFunctions] = useState('')
-  const [status, setStatus] = useState('')
-  const [priority, setPriority] = useState('')
+  const [status, setStatus] = useState('Open')
+  const [priority, setPriority] = useState('Medium')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [risk, setRisk] = useState('')
@@ -91,7 +90,7 @@ export default function ProjectDetailsForm({ kf, defaults = {}, onClose }) {
   const [projectManager, setProjectManager] = useState('')
   const [cosOwner, setCosOwner] = useState('')
   const [tcoEfforts, setTcoEfforts] = useState('')
-  const [governance, setGovernance] = useState('')
+  const [governance, setGovernance] = useState('Monthly')
   const [vendorName, setVendorName] = useState('')
   const [techStack, setTechStack] = useState('')
   const [cbAnalysis, setCbAnalysis] = useState(false)
@@ -108,6 +107,7 @@ export default function ProjectDetailsForm({ kf, defaults = {}, onClose }) {
   const submittingRef = useRef(false)
 
   const { options: peopleOptions } = useUserMasterOptions(user)
+  const functionOptions = useProjectFunctions(kf)
 
   useEffect(() => {
     pauseKissflowReads(120000)
@@ -178,7 +178,7 @@ export default function ProjectDetailsForm({ kf, defaults = {}, onClose }) {
         setError('Couldn’t verify Kissflow for Business Owner. Try again.')
         return
       }
-      const businessKf = businessStatus.user || (await resolvePmBotUser(kf))
+      const businessKf = businessStatus.user
       if (!businessKf) {
         setError('Business Owner must be a Kissflow user. This person is not in the Kissflow directory.')
         return
@@ -190,8 +190,8 @@ export default function ProjectDetailsForm({ kf, defaults = {}, onClose }) {
         Project_Type: projectType || undefined,
         Project_Category: functions || undefined,
         Functions: functions || undefined,
-        Project_Status: status || undefined,
-        Priority_1: priority || undefined,
+        Status_1: status || 'Open',
+        Priority_1: priority || 'Medium',
         Start_Date: startDate,
         End_Date: endDate,
         Risk: risk || undefined,
@@ -231,7 +231,7 @@ export default function ProjectDetailsForm({ kf, defaults = {}, onClose }) {
       const created = await createPmCaseDraft(kf, PROJECTS_ENTITY, body)
       kf?.client?.showInfo?.(
         created.webhookOnly
-          ? 'Project sent to development Kissflow.'
+          ? 'Project sent to the Kissflow integration.'
           : created.instanceId
             ? `Project created (${created.instanceId}).`
             : 'Project created.',
@@ -298,7 +298,7 @@ export default function ProjectDetailsForm({ kf, defaults = {}, onClose }) {
               <SelectWrap>
                 <select className={selectClass} value={functions} onChange={(e) => setFunctions(e.target.value)}>
                   <option value="" />
-                  {FUNCTIONS.map((p) => <option key={p} value={p}>{p}</option>)}
+                  {functionOptions.map((p) => <option key={p} value={p}>{p}</option>)}
                 </select>
               </SelectWrap>
             </Field>

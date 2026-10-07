@@ -3,7 +3,7 @@
  * Same pattern as ProjectDashboardPage createTaskInstance → openPopup.
  */
 
-import { kfMutateJson, kfGetJson, resolveKissflowAccountId, isAuthError, isLocalVitePreview } from './kfRuntime.js'
+import { kfMutateJson, kfGetJson, resolveKissflowAccountId, isLocalVitePreview } from './kfRuntime.js'
 import {
   getTenantAccessKeys,
   KF_DEV_ACCOUNT_ID,
@@ -46,65 +46,25 @@ function draftBodyForApi(body) {
   return out
 }
 
-/** POST process draft; on 401 (dev keys) create via the public webhook instead. */
+/** Create through the Kissflow integration webhook. Never POST a process draft with the access key. */
 export async function createPmProcessDraft(kfInstance, entity, body = {}) {
   if (!entity?.processId) throw new Error('Missing processId for draft create')
-  const accountId = resolveKissflowAccountId(kfInstance, entity.accountFallback)
-  if (!accountId) throw new Error('Kissflow account not ready')
-
-  const appId = String(entity.applicationIdFallback || 'Project_Management_A01').trim()
-  const path =
-    `/process/2/${accountId}/${entity.processId}` +
-    (appId ? `?_application_id=${encodeURIComponent(appId)}` : '')
-
-  const tenant = getTenantAccessKeys(kfInstance)
-  const useWebhookOnly = tenant.tenant === 'dev' && isLocalVitePreview()
-
-  let created = { instanceId: '', activityInstanceId: '', raw: null, webhookOnly: false }
-
-  if (!useWebhookOnly) {
-    try {
-      const raw = await kfMutateJson(kfInstance, path, {
-        method: 'POST',
-        body: {},
-        preferSessionAuth: true,
-      })
-      const parsed = parseProcessCreateIds(raw)
-      if (parsed.raw?.status === 'error' || parsed.raw?.error_code) {
-        throw new Error(parsed.raw.en_message || parsed.raw.message || 'Kissflow create failed')
-      }
-      if (!parsed.instanceId) {
-        throw new Error(`${entity.labels?.entitySingular || 'Item'} create API did not return an id`)
-      }
-      created = { ...parsed, accountId, webhookOnly: false }
-    } catch (error) {
-      if (!isAuthError(error)) throw error
-      created.webhookOnly = true
-    }
-  } else {
-    created.webhookOnly = true
-  }
-
   const source = sourceFromEntity(entity) || 'task'
   const fields = sanitizeCreateFields(source, body)
-
-  if (!created.webhookOnly) {
-    rememberCreatedFromWebhook(source, { fields, created })
-    return created
-  }
-
   const webhook = await submitPmCreateWebhook(kfInstance, source, {
     fields,
-    created,
     required: true,
   })
-
   if (!webhook) {
     const label = entity?.labels?.entitySingular || 'item'
-    throw new Error(`Could not create the ${String(label).toLowerCase()} on the development webhook.`)
+    throw new Error(`Could not send the ${String(label).toLowerCase()} to the Kissflow integration.`)
   }
-
-  const result = { ...created, raw: created.raw || webhook }
+  const result = {
+    instanceId: '',
+    activityInstanceId: '',
+    raw: webhook,
+    webhookOnly: true,
+  }
   rememberCreatedFromWebhook(source, { fields, created: result })
   return result
 }
@@ -658,73 +618,22 @@ export async function completePmProcessItem(kfInstance, entity, body = {}, ids =
   )
 }
 
-/** POST /case/2/{account}/{caseId} → { instanceId } */
+/** Create a project through the Kissflow integration webhook. Never POST the case with the access key. */
 export async function createPmCaseDraft(kfInstance, entity, body = {}) {
   if (!entity?.caseId) throw new Error('Missing caseId for case create')
-  const accountId = resolveKissflowAccountId(kfInstance, entity.accountFallback)
-  if (!accountId) throw new Error('Kissflow account not ready')
-
-  const tenant = getTenantAccessKeys(kfInstance)
-  const useWebhookOnly = tenant.tenant === 'dev' && isLocalVitePreview()
   const fields = sanitizeCreateFields('project', body)
-  const restBody = draftBodyForApi(fields)
-  for (const key of [
-    'Functions',
-    'Project_Status',
-    'Assignee_Name',
-    'Assignee_Email',
-    'Assignee_Email_Extracted',
-    'Requester Email',
-    'Requester_Email',
-    'Requester_Name',
-    'Created_by_flat_field_email',
-  ]) {
-    delete restBody[key]
-  }
-  let created = { instanceId: '', raw: null, webhookOnly: false }
-
-  if (!useWebhookOnly) {
-    try {
-      const path = `/case/2/${accountId}/${entity.caseId}`
-      const raw = await kfMutateJson(kfInstance, path, {
-        method: 'POST',
-        body: restBody,
-        preferSessionAuth: true,
-      })
-
-      const parsedRaw = unwrapKfCreateResponse(raw)
-      const instanceId = String(parsedRaw?._id || parsedRaw?._item_id || '').trim()
-
-      if (parsedRaw?.status === 'error' || parsedRaw?.error_code) {
-        throw new Error(parsedRaw.en_message || parsedRaw.message || 'Kissflow create failed')
-      }
-      if (!instanceId) {
-        throw new Error(`${entity.labels?.entitySingular || 'Project'} create API did not return an id`)
-      }
-      created = { instanceId, raw: parsedRaw, webhookOnly: false }
-    } catch (error) {
-      if (!isAuthError(error)) throw error
-      created.webhookOnly = true
-    }
-  } else {
-    created.webhookOnly = true
-  }
-
-  if (!created.webhookOnly) {
-    rememberCreatedFromWebhook('project', { fields, created })
-    return created
-  }
-
   const webhook = await submitPmCreateWebhook(kfInstance, 'project', {
     fields,
-    created,
     required: true,
   })
   if (!webhook) {
-    throw new Error('Could not create the project on the development webhook.')
+    throw new Error('Could not send the project to the Kissflow integration.')
   }
-
-  const result = { ...created, raw: created.raw || webhook }
+  const result = {
+    instanceId: '',
+    raw: webhook,
+    webhookOnly: true,
+  }
   rememberCreatedFromWebhook('project', { fields, created: result })
   return result
 }
@@ -768,11 +677,10 @@ export async function openPmNewItemPopup(kfInstance, entity) {
   const created = await createPmProcessDraft(kfInstance, entity, draftBodyForUser(kfInstance, entity))
   const canPopup = typeof kfInstance?.app?.page?.openPopup === 'function'
 
-  // Non-Kissflow / standalone: still create the draft (ITSM webhook pattern).
-  if (!canPopup) {
+  if (created.webhookOnly || !canPopup) {
     const label = entity?.labels?.entitySingular || 'Item'
     kfInstance?.client?.showInfo?.(
-      `${label} draft created${created.instanceId ? ` (${created.instanceId})` : ''}. Open it in Kissflow if you need the full form.`,
+      `${label} sent to the Kissflow integration.`,
     )
     return { ...created, popupId: null, localOnly: true }
   }

@@ -1311,6 +1311,10 @@ function TasksDashboardPremium({ useLayout = true, scopeToCurrentUser = false })
       dashboardRowCreateLock.add(lockKey);
       try {
         const created = await createSubtaskInstance(sdk, taskId);
+        if (created?.webhookOnly) {
+          sdk?.client?.showInfo?.('Subtask sent to the Kissflow integration.');
+          return true;
+        }
         void openSubtaskDraft(sdk, created.instanceId, created.activityInstanceId)
           .then(() => reloadData())
           .catch((e) => console.warn('Open subtask draft failed:', e));

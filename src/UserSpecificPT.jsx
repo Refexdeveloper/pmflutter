@@ -15,6 +15,7 @@ import {
 } from './components/TableColumnHeaders.jsx';
 import SatelliteOrbitMenu from './components/SatelliteOrbitMenu.jsx';
 import SubtaskAccordionRow from './components/SubtaskAccordionRow.jsx';
+import CompletedStatusUpdate from './components/CompletedStatusUpdate.jsx';
 import PtUserAvatar from './components/PtUserAvatar.jsx';
 import UserHubSubTasksPage from './UserHubSubTasksPage.jsx';
 import { PROJECT_TASK_SATELLITE_OPTIONS } from './lib/kfSatelliteCreate.js';
@@ -399,8 +400,11 @@ function UsptTaskSubtasksPanel({
               compact={compact}
               onClick={() => onOpenSubtask?.(sub)}
               statusSlot={
-                <span className={`inline-flex shrink-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeColor(sub.status)}`}>
-                  {sub.status}
+                <span className="inline-flex items-center gap-2">
+                  <span className={`inline-flex shrink-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeColor(sub.status)}`}>
+                    {sub.status}
+                  </span>
+                  <CompletedStatusUpdate status={sub.status} onUpdate={() => onOpenSubtask?.(sub)} />
                 </span>
               }
             />
@@ -920,9 +924,12 @@ function MyWorkProjectTasksPanel({
                           </span>
                         </td>
                         <td className="px-3 py-2">
-                          <span className={`inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeColor(task.status)}`}>
-                            {task.status}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className={`inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeColor(task.status)}`}>
+                              {task.status}
+                            </span>
+                            <CompletedStatusUpdate status={task.status} onUpdate={() => onOpenTask?.(task)} />
+                          </div>
                         </td>
                       </tr>
                       {showNested && isExpanded ? (
@@ -1653,6 +1660,10 @@ export default function UserSpecificPT({
       setCreatingTaskProjectId(project?.id ?? projectId);
       try {
         const created = await createTaskInstance(sdk, projectId);
+        if (created?.webhookOnly) {
+          sdk?.client?.showInfo?.('Task sent to the Kissflow integration.');
+          return true;
+        }
         const opened = openUsptKissflowPopup(
           sdk,
           USPT_POPUP_IDS.task,
@@ -1706,6 +1717,10 @@ export default function UserSpecificPT({
       setCreatingSubtaskTaskId(taskRow?.id ?? taskId);
       try {
         const created = await createSubtaskInstance(sdk, taskId);
+        if (created?.webhookOnly) {
+          sdk?.client?.showInfo?.('Subtask sent to the Kissflow integration.');
+          return true;
+        }
         const opened = openUsptKissflowPopup(
           sdk,
           USPT_POPUP_IDS.subtask,
@@ -3697,7 +3712,10 @@ export default function UserSpecificPT({
                             </span>
                           </td>
                           <td className="px-5 py-3">
-                            <span className={`inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeColor(row.status)}`}>{row.status}</span>
+                            <div className="flex items-center gap-2">
+                              <span className={`inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeColor(row.status)}`}>{row.status}</span>
+                              <CompletedStatusUpdate status={row.status} onUpdate={() => handleOpenTaskDetail(row)} />
+                            </div>
                           </td>
                         </>
                       ) : (
@@ -3876,8 +3894,11 @@ export default function UserSpecificPT({
                                 </p>
                               ) : null}
           </div>
-                            <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeColor(row.status)}`}>
-                              {row.status}
+                            <span className="inline-flex shrink-0 items-center gap-2">
+                              <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeColor(row.status)}`}>
+                                {row.status}
+                              </span>
+                              <CompletedStatusUpdate status={row.status} onUpdate={() => handleOpenTaskDetail(row)} />
                             </span>
                           </div>
                           <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-600">

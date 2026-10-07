@@ -62,12 +62,13 @@ export function buildPmCreateWebhookJson(source, { fields = {}, created = {}, us
     ...data,
     ...(instanceId ? { _id: instanceId, InstanceID: instanceId } : {}),
     ...(activityInstanceId ? { ActivityInstanceID: activityInstanceId } : {}),
-    ...(submittedBy ? { Submitted_By: submittedBy } : {}),
+    ...(submittedBy?._id ? { Submitted_By: submittedBy } : {}),
     Submitted_At: new Date().toISOString(),
   }
 
   return {
     source: src,
+    ...bucket,
     project: src === 'project' ? bucket : null,
     task: src === 'task' ? bucket : null,
     subtask: src === 'subtask' ? bucket : null,
@@ -138,12 +139,6 @@ export async function submitPmCreateWebhook(kfInstance, source, { fields, create
   const dedupeKey = webhookDedupeKey(payload)
   const pending = webhookInFlight.get(dedupeKey)
   if (pending) return pending
-
-  if (!isLocalVitePreview()) {
-    console.warn('Create webhook is sent by the application server.')
-    if (required) throw new Error('Create webhook is only available through the application server.')
-    return null
-  }
 
   persistLastCreateWebhook({ href: CREATE_WEBHOOK_PATH, payload, at: new Date().toISOString() })
   console.info('[pm-create-webhook] POST', CREATE_WEBHOOK_PATH, payload)

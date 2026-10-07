@@ -1,6 +1,7 @@
 import { kf as globalKf } from '@/sdk/index.js';
 import { kfMutateJson, fetchAllAdminProcessItems, isAuthError, isKissflowRateLimited } from './kfRuntime.js';
 import { cacheKey, getCachedOrLoad } from './kfListCache.js';
+import { submitPmCreateWebhook } from './pmCreateWebhook.js';
 
 const PROJECTS_PATH =
   '/case-report/2/{acc}/Project_Management_A01/Your_Projects_A00';
@@ -475,37 +476,33 @@ async function openProcessDraft(kfInstance, processModelId, processLabel, instan
 }
 
 /**
- * POST draft with Task_ID_Hidden → returns instance ids for openForm.
+ * Send a subtask to the Kissflow integration. Does not create a process draft as the access-key user.
  */
 export async function createSubtaskInstance(kfInstance, taskIdHidden) {
   const taskId = String(taskIdHidden || '').trim();
   if (!taskId) {
     throw new Error('Missing task id for subtask creation');
   }
-
-  return postProcessDraft(
-    kfInstance,
-    SUBTASK_PROCESS_ID,
-    { Task_ID_Hidden: taskId },
-    'Subtask',
-  );
+  const webhook = await submitPmCreateWebhook(kfInstance, 'subtask', {
+    fields: { Task_ID_Hidden: taskId },
+    required: true,
+  });
+  return { instanceId: '', activityInstanceId: '', raw: webhook, webhookOnly: true };
 }
 
 /**
- * POST draft with Project_ID_Hidden → returns instance ids for openForm.
+ * Send a task to the Kissflow integration. Does not create a process draft as the access-key user.
  */
 export async function createTaskInstance(kfInstance, projectIdHidden) {
   const projectId = String(projectIdHidden || '').trim();
   if (!projectId) {
     throw new Error('Missing project id for task creation');
   }
-
-  return postProcessDraft(
-    kfInstance,
-    TASK_PROCESS_ID,
-    { Project_ID_Hidden: projectId },
-    'Task',
-  );
+  const webhook = await submitPmCreateWebhook(kfInstance, 'task', {
+    fields: { Project_ID_Hidden: projectId },
+    required: true,
+  });
+  return { instanceId: '', activityInstanceId: '', raw: webhook, webhookOnly: true };
 }
 
 export function resolveSubtaskProcess(kfInstance) {

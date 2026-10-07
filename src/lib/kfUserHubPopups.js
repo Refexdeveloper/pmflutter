@@ -296,6 +296,10 @@ export async function openUserHubSubtaskProcessCreatePopup(kfInstance, options =
   }
   try {
     const created = await createPmProcessDraft(sdk, SUBTASKS_ENTITY, SUBTASKS_ENTITY.createDraftBody || {});
+    if (created?.webhookOnly) {
+      sdk?.client?.showInfo?.('Subtask sent to the Kissflow integration.');
+      return true;
+    }
     const p = sdk.app.page.openPopup(popupId, {
       InstanceID: created.instanceId,
       ActivityID: created.activityInstanceId,

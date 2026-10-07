@@ -10,6 +10,7 @@ import UserHubWelcome from './components/UserHubWelcome.jsx';
 import UserHubTaskToolbar from './components/UserHubTaskToolbar.jsx';
 import TablePaginationBar, { PT_TABLE_PAGE_SIZE } from './components/TablePaginationBar.jsx';
 import PtUserAvatar from './components/PtUserAvatar.jsx';
+import CompletedStatusUpdate from './components/CompletedStatusUpdate.jsx';
 import DashboardPeriodPicker, { getEmptyPeriodState } from './components/DashboardPeriodPicker.jsx';
 import { useUserHubSession } from './lib/useUserHubSession.js';
 import {
@@ -564,11 +565,14 @@ export default function UserHubSubTasksPage({
                           </span>
                         </td>
                         <td className="px-5 py-3">
-                          <span
-                            className={`inline-flex rounded-lg px-2 py-0.5 text-[10px] font-semibold sm:text-xs ${statusBadgeClass(row.status)}`}
-                          >
-                            {row.status || '—'}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`inline-flex rounded-lg px-2 py-0.5 text-[10px] font-semibold sm:text-xs ${statusBadgeClass(row.status)}`}
+                            >
+                              {row.status || '—'}
+                            </span>
+                            <CompletedStatusUpdate status={row.status} onUpdate={() => handleOpenRow(row)} />
+                          </div>
                         </td>
                       </tr>
                     );
@@ -608,10 +612,13 @@ export default function UserHubSubTasksPage({
                           <p className="min-w-0 flex-1 truncate text-sm font-medium text-slate-900">
                             {row.subtaskName}
                           </p>
-                          <span
-                            className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${statusBadgeClass(row.status)}`}
-                          >
-                            {row.status || '—'}
+                          <span className="inline-flex shrink-0 items-center gap-2">
+                            <span
+                              className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${statusBadgeClass(row.status)}`}
+                            >
+                              {row.status || '—'}
+                            </span>
+                            <CompletedStatusUpdate status={row.status} onUpdate={() => handleOpenRow(row)} />
                           </span>
                         </div>
                         {row.parentTaskName && row.parentTaskName !== '—' ? (

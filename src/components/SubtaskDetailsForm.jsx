@@ -49,7 +49,7 @@ export default function SubtaskDetailsForm({ kf, defaults = {}, onClose }) {
   const user = kf?.user
   const isUpdate = String(defaults.mode || '').toLowerCase() === 'update' || Boolean(defaults.instanceId)
   const [name, setName] = useState(() => String(defaults.name || '').trim())
-  const [priority, setPriority] = useState(() => String(defaults.priority || '').trim())
+  const [priority, setPriority] = useState(() => String(defaults.priority || 'Medium').trim() || 'Medium')
   const [assignee, setAssignee] = useState(() => String(defaults.assignee || '').trim())
   const [startDate, setStartDate] = useState(() => String(defaults.startDate || '').trim())
   const [endDate, setEndDate] = useState(() => String(defaults.endDate || '').trim())
@@ -102,6 +102,10 @@ export default function SubtaskDetailsForm({ kf, defaults = {}, onClose }) {
     if (submittingRef.current || busy) return
     if (!name.trim()) {
       setError('Sub task Name is required.')
+      return
+    }
+    if (!priority) {
+      setError('Sub task Priority is required.')
       return
     }
     if (!assignee.trim()) {
@@ -157,9 +161,7 @@ export default function SubtaskDetailsForm({ kf, defaults = {}, onClose }) {
           )
       kf?.client?.showInfo?.(
         created.webhookOnly
-          ? isUpdate
-            ? 'Subtask update sent to development Kissflow.'
-            : 'Subtask sent to development Kissflow.'
+          ? 'Subtask sent to the Kissflow integration.'
           : created.instanceId
             ? isUpdate
               ? `Subtask updated (${created.instanceId}).`
@@ -193,10 +195,9 @@ export default function SubtaskDetailsForm({ kf, defaults = {}, onClose }) {
             <Field label="Sub task Name" required>
               <input className={inputClass} value={name} onChange={(e) => setName(e.target.value)} />
             </Field>
-            <Field label="Sub task Priority">
+            <Field label="Sub task Priority" required>
               <SelectWrap>
                 <select className={selectClass} value={priority} onChange={(e) => setPriority(e.target.value)}>
-                  <option value="" />
                   {PRIORITIES.map((p) => (
                     <option key={p} value={p}>{p}</option>
                   ))}

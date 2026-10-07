@@ -17,6 +17,7 @@ import PtUserAvatar from './components/PtUserAvatar.jsx';
 import UserHubWelcome from './components/UserHubWelcome.jsx';
 import TablePaginationBar, { PT_TABLE_PAGE_SIZE } from './components/TablePaginationBar.jsx';
 import SubtaskAccordionRow from './components/SubtaskAccordionRow.jsx';
+import CompletedStatusUpdate from './components/CompletedStatusUpdate.jsx';
 import {
   TableColumnHeader,
   distinctFilterOptions,
@@ -4458,7 +4459,16 @@ function SubtaskTable({
                     )}
                   </td>
                   <td className={compact ? 'px-4 py-2.5' : 'px-5 py-3'}>
-                    <StatusBadge status={row.status} />
+                    <div className="flex items-center gap-2">
+                      <StatusBadge status={row.status} />
+                      <CompletedStatusUpdate
+                        status={row.status}
+                        onUpdate={() => {
+                          const opened = typeof onOpenPopup === 'function' ? onOpenPopup(row) : false;
+                          if (!opened) onRowClick?.(row);
+                        }}
+                      />
+                    </div>
                   </td>
                 </tr>
                 {showNested && isExpanded ? (
@@ -4473,7 +4483,12 @@ function SubtaskTable({
                               key={sub.id}
                               sub={sub}
                               onClick={() => openNestedSubtask(sub)}
-                              statusSlot={<StatusBadge status={sub.status} />}
+                              statusSlot={(
+                                <span className="inline-flex items-center gap-2">
+                                  <StatusBadge status={sub.status} />
+                                  <CompletedStatusUpdate status={sub.status} onUpdate={() => openNestedSubtask(sub)} />
+                                </span>
+                              )}
                             />
                           ))
                         )}
@@ -4529,7 +4544,16 @@ function SubtaskTable({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-[10px] font-semibold uppercase tracking-wide text-[#1E88E5]">Task</p>
-                  <StatusBadge status={row.status} />
+                  <span className="inline-flex items-center gap-2">
+                    <StatusBadge status={row.status} />
+                    <CompletedStatusUpdate
+                      status={row.status}
+                      onUpdate={() => {
+                        const opened = typeof onOpenPopup === 'function' ? onOpenPopup(row) : false;
+                        if (!opened) onRowClick?.(row);
+                      }}
+                    />
+                  </span>
                 </div>
                 <p className="mt-1 truncate text-sm font-semibold text-slate-800">{row.taskName}</p>
                 <p className="mt-1">
@@ -4608,7 +4632,12 @@ function SubtaskTable({
                     sub={sub}
                     compact
                     onClick={() => openNestedSubtask(sub)}
-                    statusSlot={<StatusBadge status={sub.status} />}
+                    statusSlot={(
+                      <span className="inline-flex items-center gap-2">
+                        <StatusBadge status={sub.status} />
+                        <CompletedStatusUpdate status={sub.status} onUpdate={() => openNestedSubtask(sub)} />
+                      </span>
+                    )}
                   />
                 ))
               )}
@@ -5492,6 +5521,10 @@ function DashboardPagePremium({
       dashboardRowCreateLock.add(lockKey);
       try {
         const created = await createTaskInstance(sdk, projectId);
+        if (created?.webhookOnly) {
+          sdk?.client?.showInfo?.('Task sent to the Kissflow integration.');
+          return true;
+        }
         void openTaskDraft(sdk, created.instanceId, created.activityInstanceId)
           .then(() => reloadDashboardData())
           .catch((openError) => {
@@ -5549,6 +5582,10 @@ function DashboardPagePremium({
       dashboardRowCreateLock.add(lockKey);
       try {
         const created = await createSubtaskInstance(sdk, taskId);
+        if (created?.webhookOnly) {
+          sdk?.client?.showInfo?.('Subtask sent to the Kissflow integration.');
+          return true;
+        }
         const draftRow = {
           InstanceID: created.instanceId,
           ActivityID: created.activityInstanceId,

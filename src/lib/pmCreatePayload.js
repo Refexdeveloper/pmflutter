@@ -81,12 +81,16 @@ const PROJECT_KEYS = new Set([
   'Company_Name',
   'Project_Type',
   'Project_Category',
+  'Functions',
   'Priority_1',
   'Start_Date',
   'End_Date',
   'Risk',
   'Risk_Mitigation_Details',
   'Business_Owner',
+  'Business_Owner_Name',
+  'Business_Owner_Email',
+  'Status_1',
   'Sponsor',
   'Project_Owner',
   'Project_Manager',
@@ -210,14 +214,21 @@ export function sanitizeCreateFields(source, fields = {}) {
   }
 
   if (src === 'project') {
+    const caseUser = (value) => {
+      const mapped = toKissflowUserField(value)
+      if (!mapped) return null
+      return { _id: mapped._id, Kind: 'User', Name: mapped.Name }
+    }
+    const category = String(raw.Project_Category || raw.Functions || '').trim()
     return {
       ...pick(raw, PROJECT_KEYS),
-      Business_Owner: toKissflowUserField(raw.Business_Owner) || null,
-      AssignedTo: toKissflowUserField(raw.AssignedTo || raw.Business_Owner) || null,
-      Sponsor: toKissflowUserField(raw.Sponsor) || null,
-      Project_Owner: toKissflowUserField(raw.Project_Owner) || null,
-      Project_Manager: toKissflowUserField(raw.Project_Manager) || null,
-      COS_Owner: toKissflowUserField(raw.COS_Owner) || null,
+      ...(category ? { Project_Category: category, Functions: category } : {}),
+      Business_Owner: caseUser(raw.Business_Owner),
+      AssignedTo: caseUser(raw.AssignedTo || raw.Business_Owner),
+      Sponsor: caseUser(raw.Sponsor),
+      Project_Owner: caseUser(raw.Project_Owner),
+      Project_Manager: caseUser(raw.Project_Manager),
+      COS_Owner: caseUser(raw.COS_Owner),
     }
   }
 

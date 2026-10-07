@@ -2815,6 +2815,10 @@ function DashboardPagePremium({ useLayout = true }) {
       dashboardRowCreateLock.add(lockKey);
       try {
         const created = await createTaskInstance(sdk, projectId);
+        if (created?.webhookOnly) {
+          sdk?.client?.showInfo?.('Task sent to the Kissflow integration.');
+          return true;
+        }
         void openTaskDraft(sdk, created.instanceId, created.activityInstanceId)
           .then(() => reloadDashboardData())
           .catch((openError) => {
@@ -2853,6 +2857,10 @@ function DashboardPagePremium({ useLayout = true }) {
       dashboardRowCreateLock.add(lockKey);
       try {
         const created = await createSubtaskInstance(sdk, taskId);
+        if (created?.webhookOnly) {
+          sdk?.client?.showInfo?.('Subtask sent to the Kissflow integration.');
+          return true;
+        }
         void openSubtaskDraft(sdk, created.instanceId, created.activityInstanceId)
           .then(() => reloadDashboardData())
           .catch((openError) => {

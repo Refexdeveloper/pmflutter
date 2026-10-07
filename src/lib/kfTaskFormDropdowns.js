@@ -194,7 +194,6 @@ export async function loadTaskFormDropdowns(kf, { instanceId = '', activityId = 
 
 function applyAppLists(base, appLists) {
   const out = { ...(base || {}) }
-  if (appLists?.Task_type?.length) out.Task_type = appLists.Task_type
   if (appLists?.Functions?.length) {
     const seen = new Set(out.Functions || [])
     const extra = appLists.Functions.filter((row) => !seen.has(row))
