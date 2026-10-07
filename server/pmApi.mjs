@@ -10,6 +10,7 @@ import {
   syncUserMaster,
 } from './directoryStore.mjs'
 import { createWebhookUrl } from './kfProxy.mjs'
+import { isDirectoryAdminRole, trackerRoleFromDirectory } from '../src/lib/trackerRole.js'
 
 const sessions = new Map()
 
@@ -55,6 +56,24 @@ function publicPerson(person) {
     trackerRole: person.trackerRole,
     roleOverride: person.roleOverride || '',
   }
+}
+
+function refexOneOrigin() {
+  return String(process.env.REFEXONE_ORIGIN || 'https://refexone.com').replace(/\/$/, '')
+}
+
+function bearerToken(req, url) {
+  const header = String(req.headers.authorization || '')
+  if (header.toLowerCase().startsWith('bearer ')) return header.slice(7).trim()
+  return String(url.searchParams.get('token') || url.searchParams.get('iam_token') || '').trim()
+}
+
+function trackerRoleForSso(me, directoryPerson) {
+  if (directoryPerson?.trackerRole) return directoryPerson.trackerRole
+  const iamRole = me?.role || me?.directoryRole || ''
+  if (isDirectoryAdminRole(iamRole)) return 'admin'
+  const designation = me?.designation || me?.job_title || me?.title || ''
+  return trackerRoleFromDirectory({ role: iamRole, designation })
 }
 
 export { ensureDirectoryReady, startMorningSync }
@@ -111,6 +130,54 @@ export async function handlePmApi(req, res) {
     res.statusCode = upstream.status
     res.setHeader('Content-Type', upstream.headers.get('content-type') || 'application/json')
     res.end(text)
+    return true
+  }
+
+  if (path === '/api/pm/sso/session' && method === 'GET') {
+    const iamToken = bearerToken(req, url)
+    if (!iamToken) {
+      send(res, 401, { error: 'Refex One session is missing.' })
+      return true
+    }
+    let meRes
+    try {
+      meRes = await fetch(`${refexOneOrigin()}/api/auth/me`, {
+        headers: { Accept: 'application/json', Authorization: `Bearer ${iamToken}` },
+        signal: AbortSignal.timeout(15000),
+      })
+    } catch {
+      send(res, 502, { error: 'Could not reach Refex One.' })
+      return true
+    }
+    if (meRes.status === 401 || meRes.status === 403) {
+      send(res, 401, { error: 'Refex One session expired.' })
+      return true
+    }
+    if (!meRes.ok) {
+      send(res, 502, { error: 'Refex One did not return a profile.' })
+      return true
+    }
+    const me = await meRes.json()
+    const email = String(me.email || '').trim().toLowerCase()
+    if (!email) {
+      send(res, 401, { error: 'Refex One profile has no email.' })
+      return true
+    }
+    const directoryPerson = lookupDirectoryEmail(email)
+    const trackerRole = trackerRoleForSso(me, directoryPerson)
+    const person = publicPerson({
+      email,
+      name: me.name || me.full_name || directoryPerson?.name || email,
+      designation: directoryPerson?.designation || me.designation || me.job_title || '',
+      directoryRole: directoryPerson?.directoryRole || me.role || '',
+      department: directoryPerson?.department || me.department || '',
+      company: directoryPerson?.company || '',
+      trackerRole,
+      roleOverride: directoryPerson?.roleOverride || '',
+    })
+    const token = randomBytes(24).toString('hex')
+    sessions.set(token, { email, role: trackerRole, at: Date.now() })
+    send(res, 200, { token, person })
     return true
   }
 

@@ -23,9 +23,9 @@ import {
 } from '../lib/iamIdentity.js'
 import { lookupKissflowUserByEmail, lookupKissflowUserById } from '../lib/kfUserLookup.js'
 import { persistDirectorySession } from '../lib/directorySession.js'
+import { establishRefexSso, logoutToRefexOne, refexLoginUrl } from '../lib/refexSso.js'
 import { labelForPmRole, resolvePmRoleKey } from '../lib/pmRoles.js'
 import { KF_PM_TRACKER_APP_ID, KF_PM_TRACKER_APP_NAME } from '../lib/kfPmApp.js'
-import NonKissflowIdentityGate from '../components/NonKissflowIdentityGate.jsx'
 import Toast from '../components/base/Toast.jsx'
 import TaskDetailsHost from '../components/TaskDetailsHost.jsx'
 import SubtaskDetailsHost from '../components/SubtaskDetailsHost.jsx'
@@ -217,10 +217,7 @@ export function SDKWrapper(props) {
     clearPmIdentity()
     persistDirectorySession('')
     if (kf) kf.user = null
-    setIdentityReady(false)
-    setIsNonKissflowUser(false)
-    setIdentitySource(null)
-    setSdkFailed(true)
+    logoutToRefexOne()
   }, [])
 
   const applyPmWorkspaceRole = useCallback((roleKey) => {
@@ -304,13 +301,19 @@ export function SDKWrapper(props) {
       }
 
       try {
-        const identity = await resolveExternalIdentity()
+        const sso = await establishRefexSso()
         if (cancelled) return
+        if (sso?.redirect) {
+          window.location.replace(sso.redirect)
+          return
+        }
+        const identity = sso?.identity || (await resolveExternalIdentity())
         if (!identity) {
           window.kf = kf = previewKf
           setKfInstance(previewKf)
           setSdkFailed(true)
           setIdentityReady(false)
+          setBootError(sso?.error || 'Sign in with Refex One to open Project Management.')
           setBooting(false)
           return
         }
@@ -362,7 +365,15 @@ export function SDKWrapper(props) {
           Starting Project Management…
         </div>
       ) : showGate ? (
-        <NonKissflowIdentityGate onContinue={continueWithIdentity} error={bootError} />
+        <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#f4f6fb] px-6 text-center">
+          <p className="text-sm text-slate-600">{bootError || 'Sign in with Refex One to continue.'}</p>
+          <a
+            href={refexLoginUrl()}
+            className="rounded-xl bg-[#1E88E5] px-4 py-2 text-sm font-semibold text-white"
+          >
+            Continue with Refex One
+          </a>
+        </div>
       ) : (
         <>
           {sdkFailed && (
@@ -375,11 +386,13 @@ export function SDKWrapper(props) {
               data-testid="pm-standalone-banner"
             >
               <span className="max-w-full">
-                {identitySource === 'user-master' || kfInstance?.user?._identity_source === 'user-master'
-                  ? 'Signed in from Refex One User Master.'
-                  : isNonKissflowUser
-                    ? 'Non-Kissflow user — Project Management is running like ITSM in-app mode. Items are matched by your work email.'
-                    : 'Standalone mode — connected with access keys (not inside a Kissflow page).'}
+                {identitySource === 'refex-sso' || kfInstance?.user?._identity_source === 'refex-sso'
+                  ? 'Signed in with Refex One.'
+                  : identitySource === 'user-master' || kfInstance?.user?._identity_source === 'user-master'
+                    ? 'Signed in from Refex One User Master.'
+                    : isNonKissflowUser
+                      ? 'Non-Kissflow user — Project Management is running like ITSM in-app mode. Items are matched by your work email.'
+                      : 'Standalone mode — connected with access keys (not inside a Kissflow page).'}
                 {kfInstance?.user?.Email ? ` Signed in as ${kfInstance.user.Email}.` : ''}
               </span>
               <span className="inline-flex min-h-8 items-center font-semibold" data-testid="pm-role-label">
@@ -390,7 +403,7 @@ export function SDKWrapper(props) {
                 onClick={switchExternalIdentity}
                 className="inline-flex min-h-8 items-center px-2 font-semibold underline-offset-2 hover:underline"
               >
-                Switch user
+                Log out
               </button>
             </div>
           )}
