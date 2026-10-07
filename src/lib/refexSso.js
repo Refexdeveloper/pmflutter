@@ -23,6 +23,25 @@ export function readIamToken() {
   }
 }
 
+/** Last Refex One person, so the dashboard can paint before /api/pm/sso/session returns. */
+export function readCachedSsoIdentity() {
+  if (!readIamToken()) return null
+  try {
+    const person = JSON.parse(localStorage.getItem('iam_user') || 'null')
+    const email = String(person?.email || '').trim()
+    if (!email.includes('@')) return null
+    return {
+      email,
+      name: person.name || email,
+      pmRole: person.trackerRole || 'employee',
+      title: person.designation || '',
+      source: 'refex-sso',
+    }
+  } catch {
+    return null
+  }
+}
+
 /** Same handoff P2P uses: Refex One appends ?token= after login. */
 export function captureSsoTokenFromUrl() {
   const params = new URLSearchParams(window.location.search)

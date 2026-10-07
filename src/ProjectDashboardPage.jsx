@@ -5280,7 +5280,16 @@ function DashboardPagePremium({
   const [userName, setUserName] = useState('User');
   const [roleName, setRoleName] = useState('Admin');
   const [activeSection, setActiveSection] = useState('kpi');
-  const [apiProjectData, setApiProjectData] = useState([]);
+  const [apiProjectData, setApiProjectData] = useState(() => {
+    try {
+      const email = String(JSON.parse(localStorage.getItem('iam_user') || 'null')?.email || '').trim().toLowerCase()
+      if (!email) return []
+      const snap = JSON.parse(sessionStorage.getItem(`pm:snap:projects:${email}`) || 'null')
+      return Array.isArray(snap?.rows) ? snap.rows : []
+    } catch {
+      return []
+    }
+  });
   const [apiSubtaskData, setApiSubtaskData] = useState([]);
   const [apiProcessSubtaskData, setApiProcessSubtaskData] = useState([]);
   const [refreshingTasks, setRefreshingTasks] = useState(false);

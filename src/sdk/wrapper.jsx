@@ -23,7 +23,8 @@ import {
 } from '../lib/iamIdentity.js'
 import { lookupKissflowUserByEmail, lookupKissflowUserById } from '../lib/kfUserLookup.js'
 import { persistDirectorySession } from '../lib/directorySession.js'
-import { establishRefexSso, logoutToRefexOne, refexLoginUrl } from '../lib/refexSso.js'
+import { establishRefexSso, logoutToRefexOne, readCachedSsoIdentity, refexLoginUrl } from '../lib/refexSso.js'
+import { prefetchTrackerLists } from '../lib/prefetchTrackerLists.js'
 import { labelForPmRole, resolvePmRoleKey } from '../lib/pmRoles.js'
 import { KF_PM_TRACKER_APP_ID, KF_PM_TRACKER_APP_NAME } from '../lib/kfPmApp.js'
 import Toast from '../components/base/Toast.jsx'
@@ -121,6 +122,30 @@ function cloneKf(instance) {
   return { ...instance, user: instance.user, app: instance.app, client: instance.client, account: instance.account }
 }
 
+function bindTrackerUser(previewKf, identity, kfUser = null) {
+  const isNonKissflowUser = !kfUser
+  const user = kfUser || syntheticKissflowUser(identity)
+  const roleKey = resolvePmRoleKey(
+    { _pm_role: identity.pmRole, Role: identity.title, designation: identity.title, ...user },
+    'employee',
+  )
+  user._pm_role = roleKey
+  user._user_type = labelForPmRole(roleKey)
+  user.Role = { Name: labelForPmRole(roleKey) }
+  user.Roles = [{ Name: labelForPmRole(roleKey) }]
+  previewKf.user = user
+  return {
+    kf: cloneKf(previewKf),
+    isNonKissflowUser,
+    identitySource: kfUser ? 'kissflow-lookup' : identity.source || 'iam',
+  }
+}
+
+function hostedOutsideKissflow() {
+  if (typeof window === 'undefined') return false
+  return !/kissflow\.com$/i.test(window.location.hostname)
+}
+
 async function attachIdentity(previewKf, identity) {
   if (!previewKf || !identity?.email) {
     return { kf: previewKf, isNonKissflowUser: true, identitySource: identity?.source || 'manual' }
@@ -141,32 +166,44 @@ async function attachIdentity(previewKf, identity) {
     console.warn('Kissflow identity lookup failed:', err?.message || err)
   }
 
-  const isNonKissflowUser = !kfUser
-  const user = kfUser || syntheticKissflowUser(identity)
-  const roleKey = resolvePmRoleKey(
-    { _pm_role: identity.pmRole, Role: identity.title, ...user },
-    'employee',
+  return bindTrackerUser(previewKf, identity, kfUser)
+}
+
+function restoreCachedSession() {
+  if (typeof window === 'undefined') return null
+  const identity = readCachedSsoIdentity()
+  if (!identity?.email) return null
+  const previewKf = createLocalPreviewKf()
+  if (!previewKf) return null
+  const bound = bindTrackerUser(previewKf, identity)
+  window.kf = kf = bound.kf
+  return bound
+}
+
+let restoredSession
+function cachedSession() {
+  if (restoredSession === undefined) restoredSession = restoreCachedSession()
+  return restoredSession
+}
+
+function BootShell() {
+  return (
+    <div className="min-h-screen bg-[#f4f6fb]">
+      <div className="overflow-hidden">
+        <div className="pm-boot-bar" />
+      </div>
+    </div>
   )
-  user._pm_role = roleKey
-  user._user_type = labelForPmRole(roleKey)
-  user.Role = { Name: labelForPmRole(roleKey) }
-  user.Roles = [{ Name: labelForPmRole(roleKey) }]
-  previewKf.user = user
-  return {
-    kf: cloneKf(previewKf),
-    isNonKissflowUser,
-    identitySource: kfUser ? 'kissflow-lookup' : identity.source || 'iam',
-  }
 }
 
 export function SDKWrapper(props) {
-  const [kfInstance, setKfInstance] = useState(null)
-  const [sdkFailed, setSdkFailed] = useState(false)
-  const [identityReady, setIdentityReady] = useState(false)
-  const [isNonKissflowUser, setIsNonKissflowUser] = useState(false)
-  const [identitySource, setIdentitySource] = useState(null)
+  const [kfInstance, setKfInstance] = useState(() => cachedSession()?.kf || null)
+  const [sdkFailed, setSdkFailed] = useState(() => Boolean(cachedSession()))
+  const [identityReady, setIdentityReady] = useState(() => Boolean(cachedSession()?.kf?.user?.Email))
+  const [isNonKissflowUser, setIsNonKissflowUser] = useState(() => Boolean(cachedSession()?.isNonKissflowUser))
+  const [identitySource, setIdentitySource] = useState(() => cachedSession()?.identitySource || null)
   const [bootError, setBootError] = useState('')
-  const [booting, setBooting] = useState(true)
+  const [booting, setBooting] = useState(() => !cachedSession())
   const [toasts, setToasts] = useState([])
 
   const pushToast = useCallback((message, type = 'info') => {
@@ -246,10 +283,15 @@ export function SDKWrapper(props) {
   }, [])
 
   useEffect(() => {
+    if (kfInstance?.user?.Email) prefetchTrackerLists(kfInstance)
+  }, [kfInstance])
+
+  useEffect(() => {
     let cancelled = false
 
     async function boot() {
-      setBooting(true)
+      const hadSession = Boolean(window.kf?.user?.Email)
+      if (!hadSession) setBooting(true)
       const existing = typeof window !== 'undefined' ? window.kf : null
       const looksLikeRealSdk = Boolean(existing?.user?.Email && existing?.app?.page?.openPopup)
 
@@ -266,27 +308,29 @@ export function SDKWrapper(props) {
         return
       }
 
-      try {
-        const sdk = await Promise.race([
-          KFSDK.initialize(),
-          new Promise((_, reject) => {
-            setTimeout(() => reject(new Error('Kissflow SDK init timeout')), 2500)
-          }),
-        ])
-        if (cancelled) return
-        if (isLocalVitePreview() && !String(sdk?.user?.Email || '').trim()) {
-          throw new Error('Local preview has no Kissflow user')
+      if (!hostedOutsideKissflow()) {
+        try {
+          const sdk = await Promise.race([
+            KFSDK.initialize(),
+            new Promise((_, reject) => {
+              setTimeout(() => reject(new Error('Kissflow SDK init timeout')), 2500)
+            }),
+          ])
+          if (cancelled) return
+          if (isLocalVitePreview() && !String(sdk?.user?.Email || '').trim()) {
+            throw new Error('Local preview has no Kissflow user')
+          }
+          window.kf = kf = sdk
+          setKfInstance(sdk)
+          setSdkFailed(false)
+          setIsNonKissflowUser(false)
+          setIdentitySource('kissflow-sdk')
+          setIdentityReady(Boolean(sdk?.user?.Email))
+          setBooting(false)
+          return
+        } catch (err) {
+          console.warn('SDK not available (standalone / non-Kissflow mode):', err?.message || err)
         }
-        window.kf = kf = sdk
-        setKfInstance(sdk)
-        setSdkFailed(false)
-        setIsNonKissflowUser(false)
-        setIdentitySource('kissflow-sdk')
-        setIdentityReady(Boolean(sdk?.user?.Email))
-        setBooting(false)
-        return
-      } catch (err) {
-        console.warn('SDK not available (standalone / non-Kissflow mode):', err?.message || err)
       }
 
       const previewKf = createLocalPreviewKf()
@@ -317,11 +361,15 @@ export function SDKWrapper(props) {
           setBooting(false)
           return
         }
-        const bound = await attachIdentity(previewKf, identity)
         if (!cancelled) {
+          const bound = bindTrackerUser(previewKf, identity)
           applyBound(bound, true)
+          prefetchTrackerLists(bound.kf)
           setBooting(false)
         }
+        attachIdentity(previewKf, identity).then((bound) => {
+          if (!cancelled && bound?.kf?.user) applyBound(bound, true)
+        })
       } catch (err) {
         if (!cancelled) {
           window.kf = kf = previewKf
@@ -359,12 +407,7 @@ export function SDKWrapper(props) {
   return (
     <KissflowSDKContext.Provider value={contextValue}>
       <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden">
-      {booting ? (
-        <div className="flex min-h-0 flex-1 items-center justify-center text-sm text-slate-500">
-          <i className="ri-loader-4-line mr-2 animate-spin" aria-hidden />
-          Starting Project Management…
-        </div>
-      ) : showGate ? (
+      {booting ? <BootShell /> : showGate ? (
         <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#f4f6fb] px-6 text-center">
           <p className="text-sm text-slate-600">{bootError || 'Sign in with Refex One to continue.'}</p>
           <a

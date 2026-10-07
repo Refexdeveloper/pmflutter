@@ -1761,7 +1761,9 @@ export default function UserSpecificPT({
         const hasCachedProjects = Array.isArray(apiProjects) && apiProjects.length > 0;
 
         if (!hasCachedProjects) setApiProjectsLoading(true);
-        try {
+        if (!hasCachedTasks) setApiTasksLoading(true);
+
+        const projectsPromise = (async () => {
           const proj = await fetchEmployeeDashboardProjects(kfInstance, { email: userEmail });
           if (cancelled) return;
           const projectsRaw = proj?.rows ?? [];
@@ -1833,29 +1835,39 @@ export default function UserSpecificPT({
         try {
           sessionStorage.setItem('userSpecificPT:projects:v3', JSON.stringify(projectsMapped));
         } catch { /* ignore */ }
-        setApiProjectsLoading(false);
-      } catch (err) {
-        if (cancelled) return;
-        setApiError(err?.message || 'Failed to load');
-        setApiProjects([]);
-        setApiProjectsLoading(false);
-      }
+          setApiProjectsLoading(false);
+        })();
 
-      try {
-        if (!hasCachedTasks) setApiTasksLoading(true);
-        const tasksRaw = (await fetchTaskTrackerData(kfInstance, { enrichDetails: false })).map(
-          mapTaskForUserSpecificPT,
-        );
+        const tasksPromise = (async () => {
+          const tasksRaw = (await fetchTaskTrackerData(kfInstance, {
+            enrichDetails: false,
+            onProgress: (rows) => {
+              if (cancelled) return;
+              const mapped = (Array.isArray(rows) ? rows : []).map(mapTaskForUserSpecificPT);
+              if (!mapped.length) return;
+              setApiTasks(mapped);
+              setApiTasksLoading(false);
+            },
+          })).map(mapTaskForUserSpecificPT);
+          if (cancelled) return;
+          setApiTasks(tasksRaw);
+          try {
+            sessionStorage.setItem('userSpecificPT:tasks', JSON.stringify(tasksRaw));
+          } catch { /* ignore */ }
+          setApiTasksLoading(false);
+        })();
+
+        const [projectsResult, tasksResult] = await Promise.allSettled([projectsPromise, tasksPromise]);
         if (cancelled) return;
-        setApiTasks(tasksRaw);
-        try {
-          sessionStorage.setItem('userSpecificPT:tasks', JSON.stringify(tasksRaw));
-        } catch { /* ignore */ }
-      } catch (err) {
-        console.warn('UserSpecificPT: task list fetch failed', err?.message || err);
-      } finally {
-        if (!cancelled) setApiTasksLoading(false);
-      }
+        if (projectsResult.status === 'rejected') {
+          setApiError(projectsResult.reason?.message || 'Failed to load');
+          if (!hasCachedProjects) setApiProjects([]);
+          setApiProjectsLoading(false);
+        }
+        if (tasksResult.status === 'rejected') {
+          console.warn('UserSpecificPT: task list fetch failed', tasksResult.reason?.message || tasksResult.reason);
+          setApiTasksLoading(false);
+        }
     }
 
     run();
@@ -1933,6 +1945,8 @@ export default function UserSpecificPT({
       const subtasksCacheKey = `userSpecificPT:myTeamSubtasks:v2:${emailKey}`;
 
       let hasProjectsCache = false;
+      let hasTasksCache = false;
+      let hasSubtasksCache = false;
       try {
         const cached = JSON.parse(sessionStorage.getItem(projectsCacheKey) || 'null');
         if (Array.isArray(cached) && cached.length > 0) {
@@ -1942,15 +1956,24 @@ export default function UserSpecificPT({
       } catch { /* ignore */ }
 
       try {
+        const cachedTasks = JSON.parse(sessionStorage.getItem(tasksCacheKey) || 'null');
+        if (Array.isArray(cachedTasks) && cachedTasks.length > 0) {
+          setMyTeamTasks(cachedTasks);
+          hasTasksCache = true;
+        }
+      } catch { /* ignore */ }
+
+      try {
         const cachedSubs = JSON.parse(sessionStorage.getItem(subtasksCacheKey) || 'null');
         if (Array.isArray(cachedSubs) && cachedSubs.length > 0) {
           setMyTeamSubtasks(cachedSubs);
+          hasSubtasksCache = true;
         }
       } catch { /* ignore */ }
 
       if (!hasProjectsCache) setMyTeamProjectsLoading(true);
-      setMyTeamTasksLoading(true);
-      setMyTeamSubtasksLoading(true);
+      if (!hasTasksCache) setMyTeamTasksLoading(true);
+      if (!hasSubtasksCache) setMyTeamSubtasksLoading(true);
       setMyTeamProjectsError(null);
       setMyTeamTasksError(null);
       setMyTeamSubtasksError(null);
@@ -1978,16 +2001,19 @@ export default function UserSpecificPT({
           });
         });
 
-        const { tasks } = await fetchMyTeamTasks(kfInstance, {
-          loggedInEmail: userEmail,
-          allowedProjectIds,
-        });
+        const [taskResult, subtaskResult] = await Promise.all([
+          fetchMyTeamTasks(kfInstance, {
+            loggedInEmail: userEmail,
+            allowedProjectIds,
+          }),
+          fetchMyTeamSubtasks(kfInstance, {
+            loggedInEmail: userEmail,
+            allowedProjectIds,
+          }),
+        ]);
         if (cancelled) return;
-        const { subtasks } = await fetchMyTeamSubtasks(kfInstance, {
-          loggedInEmail: userEmail,
-          allowedProjectIds,
-        });
-        if (cancelled) return;
+        const tasks = taskResult?.tasks || [];
+        const subtasks = subtaskResult?.subtasks || [];
         setMyTeamTasks(tasks);
         setMyTeamSubtasks(subtasks);
         try {

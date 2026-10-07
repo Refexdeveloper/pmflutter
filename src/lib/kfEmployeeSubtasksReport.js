@@ -152,23 +152,25 @@ export async function fetchEmployeeSubtasksByScope(kfInstance, options = {}) {
   if (!email || !email.includes('@')) {
     return { email: '', scope, rows: [] }
   }
-  const assignee = await resolveDashboardAssignee(kfInstance, email, options.userId)
-
-  const key = cacheKey('emp-subtasks-report-v4', scope, assignee.email, assignee.userId)
+  const key = cacheKey('emp-subtasks-report-v5', scope, email)
   if (options.bust) invalidateListCache(key)
 
   return getCachedOrLoad(key, async () => {
-  const fromAdmin = async () => {
-    const fallback = await fetchSubtaskProcessData(kfInstance, { email, bust: options.bust })
-    const mine = email.toLowerCase()
-    const rows = (Array.isArray(fallback) ? fallback : []).filter((row) => {
-      if (scope === 'created') return rowRequesterEmail(row) === mine
-      return rowMatchesCurrentAssignee(row, assignee.email, assignee.userId)
-    })
-    return { email, scope, rows }
-  }
+    const assigneePromise = resolveDashboardAssignee(kfInstance, email, options.userId)
+    const fromAdmin = async (assignee) => {
+      const fallback = await fetchSubtaskProcessData(kfInstance, { email, bust: options.bust })
+      const mine = email.toLowerCase()
+      const rows = (Array.isArray(fallback) ? fallback : []).filter((row) => {
+        if (scope === 'created') return rowRequesterEmail(row) === mine
+        return rowMatchesCurrentAssignee(row, assignee.email, assignee.userId)
+      })
+      return { email, scope, rows }
+    }
     try {
-      const page = await fetchReportPages(kfInstance, { email, scope })
+      const [assignee, page] = await Promise.all([
+        assigneePromise,
+        fetchReportPages(kfInstance, { email, scope }),
+      ])
       const mapped = mapReportScopeRows(page)
       const rows = scope === 'created'
         ? mapped.filter((row) => rowRequesterEmail(row) === assignee.email)
@@ -176,7 +178,7 @@ export async function fetchEmployeeSubtasksByScope(kfInstance, options = {}) {
       return { email: assignee.email, scope, rows }
     } catch (error) {
       console.warn(`Employee ${scope} subtasks report failed:`, error?.message || error)
-      return fromAdmin()
+      return fromAdmin(await assigneePromise)
     }
   })
 }

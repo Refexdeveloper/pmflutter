@@ -14,6 +14,7 @@
 import { KF_PM_CASE_ID, KF_PM_TRACKER_APP_ID } from './kfPmApp.js'
 import { fetchProjectListSummary, mapItemsToProjectRows } from './kfProjectDashboard.js'
 import { cacheKey, getCachedOrLoad } from './kfListCache.js'
+import { writeListSnapshot } from './listSnapshot.js'
 import { loginEmailOf } from './kfEmployeeTasksReport.js'
 import { resolveDashboardAssignee, rowMatchesCurrentAssignee } from './kfUserField.js'
 import { isLocalVitePreview } from './kfRuntime.js'
@@ -133,23 +134,28 @@ export async function fetchEmployeeDashboardProjects(kfInstance, options = {}) {
   if (!email || !email.includes('@')) {
     return { email: '', rows: [], subtasks: [], listItems: [], fieldIds: null, accountId: EMP_PROJECT_ACCOUNT_ID }
   }
-  const assignee = await resolveDashboardAssignee(kfInstance, email, options.userId)
-
-  return getCachedOrLoad(cacheKey('emp-projects-report-v2', assignee.email, assignee.userId, options.bust ? 'bust' : ''), async () => {
+  return getCachedOrLoad(cacheKey('emp-projects-report-v3', email, options.bust ? 'bust' : ''), async () => {
+    const assigneePromise = resolveDashboardAssignee(kfInstance, email, options.userId)
     let matched = []
+    let assignee = { email, userId: '' }
     try {
-      const page = await fetchProjectReportPages(kfInstance, {
-        pageSize: EMP_PROJECT_PAGE_SIZE,
-      })
+      const [resolved, page] = await Promise.all([
+        assigneePromise,
+        fetchProjectReportPages(kfInstance, {
+          pageSize: EMP_PROJECT_PAGE_SIZE,
+        }),
+      ])
+      assignee = resolved
       const hydrated = (page.rows || []).map((row) => hydrateReportRow(row, page.columns))
       matched = rowsForLoginAssignee(hydrated, assignee.email, assignee.userId)
     } catch (error) {
       console.warn('Employee project report failed:', error?.message || error)
+      assignee = await assigneePromise
       const summary = await fetchProjectListSummary(kfInstance)
       matched = rowsForLoginAssignee(summary?.listItems, assignee.email, assignee.userId)
     }
     const rows = mapProjectReportRows(matched)
-    return {
+    const result = {
       email: assignee.email,
       rows,
       subtasks: rows.flatMap((row) => row.subtasks || []),
@@ -157,5 +163,7 @@ export async function fetchEmployeeDashboardProjects(kfInstance, options = {}) {
       fieldIds: null,
       accountId: EMP_PROJECT_ACCOUNT_ID,
     }
+    writeListSnapshot(`projects:${assignee.email}`, { rows })
+    return result
   })
 }

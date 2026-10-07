@@ -101,7 +101,11 @@ function TrackerHeader({ page, setPage }) {
 export default function PmTrackerChrome({ children }) {
   const { kf, sdkFailed, identityReady } = useContext(KissflowSDKContext)
   const [employeePage, setEmployeePage] = useState('projects')
-  const [visitedEmployeePages, setVisitedEmployeePages] = useState({ projects: true })
+  const [visitedEmployeePages, setVisitedEmployeePages] = useState({
+    projects: true,
+    tasks: true,
+    subtasks: true,
+  })
   const [pmPage, setPmPage] = useState('home')
 
   useEffect(() => {

@@ -218,13 +218,12 @@ export async function fetchEmployeeTasksByScope(kfInstance, options = {}) {
   if (!email || !email.includes('@')) {
     return { email: '', scope, rows: [] }
   }
-  const assignee = await resolveDashboardAssignee(kfInstance, email, options.userId)
-
-  const key = cacheKey('emp-tasks-report-v5', scope, assignee.email, assignee.userId)
+  const key = cacheKey('emp-tasks-report-v6', scope, email)
   if (options.bust) invalidateListCache(key)
 
   return getCachedOrLoad(key, async () => {
-    const fromAdmin = async () => {
+    const assigneePromise = resolveDashboardAssignee(kfInstance, email, options.userId)
+    const fromAdmin = async (assignee) => {
       const fallback = await fetchEmployeeTasksFromAdminList(kfInstance, assignee.email, assignee.userId)
       return {
         email: assignee.email,
@@ -233,7 +232,10 @@ export async function fetchEmployeeTasksByScope(kfInstance, options = {}) {
       }
     }
     try {
-      const page = await fetchReportPages(kfInstance, { email, scope })
+      const [assignee, page] = await Promise.all([
+        assigneePromise,
+        fetchReportPages(kfInstance, { email, scope }),
+      ])
       const mapped = mapReportScopeRows(page)
       const rows = scope === 'created'
         ? mapped.filter((row) => emailsMatch(row.requesterEmail || row.raw?.requester_email, assignee.email))
@@ -241,7 +243,7 @@ export async function fetchEmployeeTasksByScope(kfInstance, options = {}) {
       return { email: assignee.email, scope, rows }
     } catch (error) {
       console.warn(`Employee ${scope} report failed:`, error?.message || error)
-      return fromAdmin()
+      return fromAdmin(await assigneePromise)
     }
   })
 }
