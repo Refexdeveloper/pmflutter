@@ -1,0 +1,10 @@
+.git
+node_modules
+dist
+.env
+.env.*
+data
+aravind
+scripts/playwright-output
+*.zip
+.cursor

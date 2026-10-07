@@ -16,14 +16,34 @@ const EMPLOYEE_PAGES = [
 ]
 
 function TrackerTitle() {
+  const { kf, switchExternalIdentity } = useContext(KissflowSDKContext)
+  const user = kf?.user
+  const hello = String(user?.FirstName || user?.Name || user?.Email || '').trim().split(/\s+/)[0]
   return (
-    <div className="flex min-w-0 items-center gap-1.5 px-4 py-2.5 sm:px-5">
-      <h1 className="truncate text-[15px] font-semibold text-slate-800">
-        {KF_PM_TRACKER_APP_NAME}
-      </h1>
-      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full text-slate-400">
-        <i className="ri-information-line text-sm" aria-hidden />
-      </span>
+    <div className="flex min-w-0 items-center justify-between gap-3 px-4 py-2.5 sm:px-5">
+      <div className="flex min-w-0 items-center gap-1.5">
+        <h1 className="truncate text-[15px] font-semibold text-slate-800">
+          {KF_PM_TRACKER_APP_NAME}
+        </h1>
+        <span className="inline-flex h-5 w-5 items-center justify-center rounded-full text-slate-400">
+          <i className="ri-information-line text-sm" aria-hidden />
+        </span>
+      </div>
+      <div className="flex shrink-0 items-center gap-3">
+        {hello ? (
+          <span className="truncate text-sm font-semibold text-slate-800" data-testid="pm-hello">
+            Hi {hello}
+          </span>
+        ) : null}
+        <button
+          type="button"
+          onClick={switchExternalIdentity}
+          className="text-sm font-semibold text-sky-700 hover:underline"
+          data-testid="pm-logout"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   )
 }

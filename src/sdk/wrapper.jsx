@@ -376,37 +376,6 @@ export function SDKWrapper(props) {
         </div>
       ) : (
         <>
-          {sdkFailed && (
-            <div
-              className={`flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-4 py-2 text-center text-xs ${
-                isNonKissflowUser
-                  ? 'bg-sky-50 text-sky-900'
-                  : 'bg-amber-50 text-amber-900'
-              }`}
-              data-testid="pm-standalone-banner"
-            >
-              <span className="max-w-full">
-                {identitySource === 'refex-sso' || kfInstance?.user?._identity_source === 'refex-sso'
-                  ? 'Signed in with Refex One.'
-                  : identitySource === 'user-master' || kfInstance?.user?._identity_source === 'user-master'
-                    ? 'Signed in from Refex One User Master.'
-                    : isNonKissflowUser
-                      ? 'Non-Kissflow user — Project Management is running like ITSM in-app mode. Items are matched by your work email.'
-                      : 'Standalone mode — connected with access keys (not inside a Kissflow page).'}
-                {kfInstance?.user?.Email ? ` Signed in as ${kfInstance.user.Email}.` : ''}
-              </span>
-              <span className="inline-flex min-h-8 items-center font-semibold" data-testid="pm-role-label">
-                {labelForPmRole(resolvePmRoleKey(kfInstance?.user, 'employee'))}
-              </span>
-              <button
-                type="button"
-                onClick={switchExternalIdentity}
-                className="inline-flex min-h-8 items-center px-2 font-semibold underline-offset-2 hover:underline"
-              >
-                Log out
-              </button>
-            </div>
-          )}
           <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
             {props.children}
           </div>

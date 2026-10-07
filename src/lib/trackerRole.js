@@ -13,7 +13,7 @@ export function isDirectoryAdminRole(role) {
 export function isProjectManagerDesignation(designation) {
   const blob = compact(designation)
   if (!blob) return false
-  return blob.includes('projectmanager') || blob.includes('programmanager')
+  return blob.includes('manager') || blob.includes('projectmanager') || blob.includes('programmanager')
 }
 
 /**
