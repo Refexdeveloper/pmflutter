@@ -12,6 +12,9 @@ dist/
 # User Master snapshot and admin role overrides (PII)
 data/
 
+# Local probe output (may contain webhook URLs)
+scripts/playwright-output/
+
 # Logs & OS
 *.log
 npm-debug.log*
@@ -36,5 +39,3 @@ solar-expense-dashboard-v2/
 
 # Cursor local
 .cursor/
-
-src/lib/kfAccessKeys.js

@@ -136,8 +136,8 @@ function userMasterUrl() {
 }
 
 async function fetchUserMasterPage(page) {
-  const token = envValue('VITE_USER_MASTER_TOKEN')
-  if (!token) throw new Error('User Master token is missing. Set VITE_USER_MASTER_TOKEN.')
+  const token = envValue('USER_MASTER_TOKEN') || envValue('VITE_USER_MASTER_TOKEN')
+  if (!token) throw new Error('User Master token is missing. Set USER_MASTER_TOKEN.')
   const url = `${userMasterUrl()}?status=all&page=${page}&page_size=${PAGE_SIZE}`
   const res = await fetch(url, {
     headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
@@ -194,7 +194,11 @@ export async function ensureDirectoryReady() {
       if (!overrides || typeof overrides !== 'object' || Array.isArray(overrides)) overrides = {}
       const age = snapshot.syncedAt ? Date.now() - Date.parse(snapshot.syncedAt) : Infinity
       if (!snapshot.people.length || age > 20 * 60 * 60 * 1000) {
-        await syncUserMaster()
+        try {
+          await syncUserMaster()
+        } catch (error) {
+          console.warn('User Master sync skipped:', error?.message || error)
+        }
       }
     })().catch((error) => {
       ready = null
@@ -205,10 +209,19 @@ export async function ensureDirectoryReady() {
 }
 
 export function directoryStatus() {
+  const devId = envValue('KF_ACCESS_KEY_ID') || envValue('VITE_KF_DEV_ACCESS_KEY_ID') || envValue('VITE_KF_ACCESS_KEY_ID')
+  const devSecret = envValue('KF_ACCESS_KEY_SECRET') || envValue('VITE_KF_DEV_ACCESS_KEY_SECRET') || envValue('VITE_KF_ACCESS_KEY_SECRET')
+  const liveId = envValue('KF_LIVE_ACCESS_KEY_ID') || envValue('VITE_KF_LIVE_ACCESS_KEY_ID')
+  const liveSecret = envValue('KF_LIVE_ACCESS_KEY_SECRET') || envValue('VITE_KF_LIVE_ACCESS_KEY_SECRET')
   return {
     ok: true,
     syncedAt: snapshot.syncedAt || null,
     count: snapshot.people.length,
+    userMasterConfigured: Boolean(envValue('USER_MASTER_TOKEN') || envValue('VITE_USER_MASTER_TOKEN')),
+    kissflowDevConfigured: Boolean(devId && devSecret),
+    kissflowLiveConfigured: Boolean(liveId && liveSecret),
+    webhookConfigured: Boolean(envValue('PM_CREATE_WEBHOOK_URL') || envValue('VITE_PM_CREATE_WEBHOOK_URL')),
+    gcsBucketConfigured: Boolean(envValue('PM_GCS_BUCKET')),
   }
 }
 
@@ -240,7 +253,7 @@ export function listDirectory(query, limit = 30) {
   return searchDirectory(query, limit)
 }
 
-export function setTrackerRoleOverride(email, trackerRole) {
+export async function setTrackerRoleOverride(email, trackerRole) {
   const person = lookupDirectoryEmail(email)
   if (!person) throw new Error('That person is not in User Master.')
   if (person.trackerRole === 'admin' && !person.roleOverride) {

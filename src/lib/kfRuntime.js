@@ -2,10 +2,6 @@ import {
   KF_API_ORIGIN,
   KF_DEV_ACCOUNT_ID,
   KF_LIVE_ACCOUNT_ID,
-  KF_ACCESS_KEY_ID,
-  KF_ACCESS_KEY_SECRET,
-  KF_LIVE_ACCESS_KEY_ID,
-  KF_LIVE_ACCESS_KEY_SECRET,
   buildKissflowAccessKeyHeaders,
   getTenantAccessKeys,
 } from './kfAccessKeys.js';
@@ -117,17 +113,19 @@ export function invalidateKissflowGetCache(prefix = '') {
   }
 }
 
+/** Standalone host (Vite or Cloud Run), not a page embedded on Kissflow. */
 function isLocalVitePreview() {
-  if (typeof window === 'undefined' || !import.meta.env.DEV) return false;
-  const host = String(window.location.hostname || '');
-  return !host.includes('kissflow.com');
+  if (typeof window === 'undefined') return false;
+  const host = String(window.location.hostname || '').toLowerCase();
+  if (!host || host.includes('kissflow.com') || host.includes('kissflow.store')) return false;
+  return true;
 }
 
 export { isLocalVitePreview };
 
 /** Development keys 401 on localhost. GET lists through `/kf-live` + live account. */
 export function shouldUseLocalLiveReads() {
-  return isLocalVitePreview() && Boolean(KF_LIVE_ACCESS_KEY_ID && KF_LIVE_ACCESS_KEY_SECRET);
+  return isLocalVitePreview();
 }
 
 export function rewriteKissflowPathToLiveAccount(path) {
@@ -142,7 +140,7 @@ export function localLiveReadUrl(path) {
 }
 
 export function localLiveReadHeaders() {
-  return buildKissflowAccessKeyHeaders(KF_LIVE_ACCESS_KEY_ID, KF_LIVE_ACCESS_KEY_SECRET);
+  return { Accept: 'application/json' };
 }
 
 async function fetchLocalLiveJson(path) {
@@ -170,10 +168,7 @@ export async function fetchKissflowDevJson(path, options = {}) {
   const retries = Number.isFinite(Number(options.retries)) ? Number(options.retries) : 1;
   return kissflowReadWithRetry(async () => {
     const url = isLocalVitePreview() ? `/kf-dev${withSlash}` : `${DEV_KISSFLOW_ORIGIN}${withSlash}`;
-    const headers = {
-      Accept: 'application/json',
-      ...buildKissflowAccessKeyHeaders(KF_ACCESS_KEY_ID, KF_ACCESS_KEY_SECRET),
-    };
+    const headers = { Accept: 'application/json' };
     const res = await fetch(url, {
       method: 'GET',
       credentials: 'omit',
@@ -312,7 +307,7 @@ export async function kfGetJson(kfInstance, path, optionsOrUrl) {
     const tenantKeys = getTenantAccessKeys(kfInstance);
     const keyId = String(tenantKeys.accessKeyId || '').trim();
     const keySecret = String(tenantKeys.accessKeySecret || '').trim();
-    if (!keyId || !keySecret) {
+    if (!isLocalVitePreview() && (!keyId || !keySecret)) {
       throw new Error('Kissflow SDK not ready — open this page inside Kissflow.');
     }
 
@@ -470,7 +465,7 @@ export async function kfMutateJson(
   const tenantKeys = getTenantAccessKeys(kfInstance);
   const keyId = String(accessKeyId || tenantKeys.accessKeyId || '').trim();
   const keySecret = String(accessKeySecret || tenantKeys.accessKeySecret || '').trim();
-  const hasAccessKeys = Boolean(keyId && keySecret);
+  const hasAccessKeys = Boolean((keyId && keySecret) || isLocalVitePreview());
   const fetchBody = body !== undefined ? JSON.stringify(body) : undefined;
   const origin = resolveKissflowApiOrigin(kfInstance);
 
@@ -516,7 +511,7 @@ export async function kfMutateJson(
   async function mutateWithTenantAccessKeys() {
     if (!hasAccessKeys) {
       throw new Error(
-        `Missing Kissflow access keys for ${tenantKeys.tenant} tenant. Set VITE_KF${tenantKeys.tenant === 'live' ? '_LIVE' : ''}_ACCESS_KEY_ID and VITE_KF${tenantKeys.tenant === 'live' ? '_LIVE' : ''}_ACCESS_KEY_SECRET, then rebuild.`,
+        `Missing Kissflow access keys for ${tenantKeys.tenant} tenant. Set them on the server, then restart.`,
       );
     }
 

@@ -93,8 +93,8 @@ export async function lookupKissflowUserByEmailOnLive(email) {
   const accountId = String(KF_LIVE_ACCOUNT_ID || '').trim();
   const keyId = String(KF_LIVE_ACCESS_KEY_ID || '').trim();
   const keySecret = String(KF_LIVE_ACCESS_KEY_SECRET || '').trim();
-  if (!origin || !accountId || !keyId || !keySecret) {
-    throw directoryUnverifiedError('Live Kissflow user keys are not configured');
+  if (!origin || !accountId || (!isLocalVitePreview() && (!keyId || !keySecret))) {
+    throw directoryUnverifiedError('Live Kissflow user directory is not configured');
   }
   const res = await fetch(
     `${origin}/user/2/${accountId}/?page_number=1&page_size=50&user_type=User&active_user=true&q=${encodeURIComponent(needle)}`,
@@ -140,7 +140,7 @@ async function fetchAllUsersFromLive() {
   const accountId = String(KF_LIVE_ACCOUNT_ID || '').trim()
   const keyId = String(KF_LIVE_ACCESS_KEY_ID || '').trim()
   const keySecret = String(KF_LIVE_ACCESS_KEY_SECRET || '').trim()
-  if (!origin || !accountId || !keyId || !keySecret) return []
+  if (!origin || !accountId || (!isLocalVitePreview() && (!keyId || !keySecret))) return []
   const res = await fetch(`${origin}${allUsersPath(accountId)}`, {
     method: 'GET',
     credentials: 'omit',

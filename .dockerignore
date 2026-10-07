@@ -4,6 +4,10 @@ dist
 .env
 .env.*
 data
-scripts/playwright-output
+aravind
+postman
+scripts
+docs
 *.zip
 .cursor
+*.md

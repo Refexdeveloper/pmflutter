@@ -355,8 +355,8 @@ const collection = {
   variable: [
     { key: 'kf_origin', value: 'https://development-refexgroup.kissflow.com' },
     { key: 'kf_account', value: 'AcCMptp3yqcn' },
-    { key: 'kf_access_key_id', value: 'Ak215a858a-eebe-452c-bec4-84470758ad39' },
-    { key: 'kf_access_key_secret', value: 'vxwkwvmFx2y0nlPIPE5hF-Vt3Ge9-UCuAb4rGd2AB1VE6fJWsuALh7ykcSHr-P74mRtbsvZ28nCan14p3B9r4w' },
+    { key: 'kf_access_key_id', value: '' },
+    { key: 'kf_access_key_secret', value: '' },
     { key: 'app_id', value: 'Project_Management_A01' },
     { key: 'case_id', value: 'Project_Management_A01' },
     { key: 'task_process_id', value: 'Project_Sub_Task_A01' },
@@ -368,9 +368,9 @@ const collection = {
     { key: 'user_id', value: '' },
     { key: 'user_name', value: '' },
     { key: 'user_email', value: '' },
-    { key: 'webhook_token', value: 'ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg' },
+    { key: 'webhook_token', value: '' },
     { key: 'user_master_url', value: 'https://refexone.com/api/v1/user-master' },
-    { key: 'user_master_token', value: 'um_cfc856b8070a49e6939e4269a4ad778a99d9cc24ab3a46aaa3c181f049382c1b' },
+    { key: 'user_master_token', value: '' },
   ],
 }
 

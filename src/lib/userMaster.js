@@ -5,11 +5,6 @@
 
 import { trackerRoleFromDirectory } from './trackerRole.js'
 
-const USER_MASTER_TOKEN = String(import.meta.env.VITE_USER_MASTER_TOKEN || '').trim();
-const USER_MASTER_URL = String(
-  import.meta.env.VITE_USER_MASTER_URL || 'https://refexone.com/api/v1/user-master',
-).replace(/\/$/, '');
-
 const PAGE_SIZE = 100;
 const MAX_PAGES = 50;
 const CACHE_TTL_MS = 5 * 60 * 1000;
@@ -17,13 +12,11 @@ const CACHE_TTL_MS = 5 * 60 * 1000;
 let cache = { at: 0, users: null };
 
 export function isUserMasterConfigured() {
-  return Boolean(USER_MASTER_TOKEN);
+  return true;
 }
 
 function userMasterRequestUrl(page, pageSize) {
-  const qs = `status=all&page=${page}&page_size=${pageSize}`;
-  if (import.meta.env.DEV) return `/api/v1/user-master?${qs}`;
-  return `${USER_MASTER_URL}?${qs}`;
+  return `/api/v1/user-master?status=all&page=${page}&page_size=${pageSize}`;
 }
 
 function extractUsers(payload) {
@@ -76,16 +69,13 @@ export function userMasterOptionLabel(person) {
 }
 
 async function fetchUserMasterPage(page, pageSize) {
-  if (!USER_MASTER_TOKEN) {
-    throw new Error('User Master token is missing. Set VITE_USER_MASTER_TOKEN in .env.');
-  }
   const res = await fetch(userMasterRequestUrl(page, pageSize), {
     method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${USER_MASTER_TOKEN}`,
-    },
+    headers: { Accept: 'application/json' },
   });
+  if (res.status === 503) {
+    throw new Error('User Master is not configured on the server.');
+  }
   if (!res.ok) {
     throw new Error(`User Master HTTP ${res.status}`);
   }
@@ -97,7 +87,6 @@ export async function fetchUserMasterUsers({ force = false } = {}) {
   if (!force && cache.users && Date.now() - cache.at < CACHE_TTL_MS) {
     return cache.users;
   }
-  if (!USER_MASTER_TOKEN) return [];
 
   const seen = new Set();
   const merged = [];

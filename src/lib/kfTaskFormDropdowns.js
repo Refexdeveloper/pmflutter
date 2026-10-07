@@ -98,8 +98,11 @@ async function fetchFieldPages(loadPage, ctx, fieldId) {
 }
 
 async function fetchLiveCollectionDropdowns() {
-  const origin = String(KF_LIVE_API_ORIGIN || '').replace(/\/$/, '')
-  const headers = buildKissflowAccessKeyHeaders(KF_LIVE_ACCESS_KEY_ID, KF_LIVE_ACCESS_KEY_SECRET)
+  const standalone = isLocalVitePreview()
+  const origin = standalone ? '/kf-live' : String(KF_LIVE_API_ORIGIN || '').replace(/\/$/, '')
+  const headers = standalone
+    ? { Accept: 'application/json' }
+    : buildKissflowAccessKeyHeaders(KF_LIVE_ACCESS_KEY_ID, KF_LIVE_ACCESS_KEY_SECRET)
   const ctx = {
     accountId: KF_LIVE_ACCOUNT_ID || COLLECTION_SEED.accountId,
     processId: COLLECTION_SEED.processId,

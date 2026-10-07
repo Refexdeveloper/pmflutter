@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { extname, join, normalize } from 'node:path'
 import { ensureDirectoryReady, handlePmApi, startMorningSync } from './pmApi.mjs'
 import { loadDotEnv } from './directoryStore.mjs'
+import { handleExternalProxy } from './kfProxy.mjs'
 
 loadDotEnv()
 
@@ -27,6 +28,7 @@ startMorningSync()
 createServer(async (req, res) => {
   try {
     if (await handlePmApi(req, res)) return
+    if (await handleExternalProxy(req, res)) return
     const url = new URL(req.url || '/', 'http://localhost')
     const requested = normalize(url.pathname).replace(/^(\.\.[/\\])+/, '')
     const relative = requested === '/' || requested === '\\' ? '/index.html' : requested

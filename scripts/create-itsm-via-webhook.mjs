@@ -14,7 +14,7 @@ function envValue(name) {
   return line ? line.slice(name.length + 1).trim() : ''
 }
 
-const webhookUrl = envValue('VITE_PM_CREATE_WEBHOOK_URL')
+const webhookUrl = envValue('PM_CREATE_WEBHOOK_URL') || envValue('VITE_PM_CREATE_WEBHOOK_URL')
 
 const submittedAt = new Date().toISOString()
 const assigneeText = {

@@ -42,7 +42,7 @@ function emitPmToast(message, type = 'info') {
 
 function createLocalPreviewKf() {
   const tenant = getTenantAccessKeys(null)
-  if (!tenant.accessKeyId || !tenant.accessKeySecret || !tenant.defaultAccountId) {
+  if (!tenant.defaultAccountId) {
     return null
   }
 
@@ -202,7 +202,7 @@ export function SDKWrapper(props) {
     if (!identity) throw new Error('Email is required')
     const previewKf = kfInstance || createLocalPreviewKf()
     if (!previewKf) {
-      throw new Error('Kissflow access keys are missing. Add VITE_KF_ACCESS_KEY_ID in .env.')
+      throw new Error('Kissflow account is not configured.')
     }
     const bound = await attachIdentity(previewKf, identity)
     applyBound(bound, true)

@@ -9,6 +9,7 @@ import {
   startMorningSync,
   syncUserMaster,
 } from './directoryStore.mjs'
+import { createWebhookUrl } from './kfProxy.mjs'
 
 const sessions = new Map()
 
@@ -87,6 +88,32 @@ export async function handlePmApi(req, res) {
     return true
   }
 
+  if (path === '/api/pm/create-webhook' && method === 'POST') {
+    const webhookUrl = createWebhookUrl()
+    if (!webhookUrl) {
+      send(res, 503, { error: 'Create webhook URL is not configured on the server.' })
+      return true
+    }
+    const body = await readBody(req)
+    let upstream
+    try {
+      upstream = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(25000),
+      })
+    } catch {
+      send(res, 502, { error: 'Create webhook request failed.' })
+      return true
+    }
+    const text = await upstream.text()
+    res.statusCode = upstream.status
+    res.setHeader('Content-Type', upstream.headers.get('content-type') || 'application/json')
+    res.end(text)
+    return true
+  }
+
   if (path === '/api/pm/health' && method === 'GET') {
     send(res, 200, directoryStatus())
     return true
@@ -130,7 +157,7 @@ export async function handlePmApi(req, res) {
     }
     const body = await readBody(req)
     try {
-      const person = setTrackerRoleOverride(body.email, body.trackerRole)
+      const person = await setTrackerRoleOverride(body.email, body.trackerRole)
       send(res, 200, { person: publicPerson(person) })
     } catch (error) {
       send(res, 400, { error: error?.message || 'Could not update the role.' })

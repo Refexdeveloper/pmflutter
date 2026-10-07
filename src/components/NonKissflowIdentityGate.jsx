@@ -58,7 +58,7 @@ export default function NonKissflowIdentityGate({ onContinue, error }) {
     setDirectoryError('')
     try {
       if (!isUserMasterConfigured()) {
-        throw new Error('User Master is not configured. Set VITE_USER_MASTER_TOKEN in .env.')
+        throw new Error('User Master is not configured on the server.')
       }
       const rows = await fetchUserMasterUsers({ force: true })
       setUsers(Array.isArray(rows) ? rows : [])

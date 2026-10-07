@@ -3,22 +3,11 @@
  * Same URL; JSON `source` is project | task | subtask, and only that bucket is filled.
  */
 
-import { getTenantAccessKeys } from './kfAccessKeys.js'
 import { compactFields, isKissflowUserId, sanitizeWebhookUserFields } from './kfUserField.js'
 import { sanitizeCreateFields } from './pmCreatePayload.js'
+import { isLocalVitePreview } from './kfRuntime.js'
 
-const DEFAULT_WEBHOOK_TOKEN =
-  'ekghyxBGWiAFnjoMDj5XlicOJSY69L5VegJFnTIdO027uN7GdV-48YnmQWEYgXPlYnveA1t0iRgNbhWnBSxg'
-
-function defaultWebhookUrl() {
-  const tenant = getTenantAccessKeys(null)
-  const origin = String(tenant.apiOrigin || 'https://development-refexgroup.kissflow.com').replace(/\/$/, '')
-  const accountId = String(tenant.defaultAccountId || 'AcCMptp3yqcn').trim()
-  return `${origin}/integration/2/${accountId}/webhook/${DEFAULT_WEBHOOK_TOKEN}`
-}
-
-export const PM_CREATE_WEBHOOK_URL =
-  import.meta.env.VITE_PM_CREATE_WEBHOOK_URL || defaultWebhookUrl()
+const CREATE_WEBHOOK_PATH = '/api/pm/create-webhook'
 
 export const PM_CREATE_SOURCES = {
   project: 'project',
@@ -83,32 +72,6 @@ export function buildPmCreateWebhookJson(source, { fields = {}, created = {}, us
     task: src === 'task' ? bucket : null,
     subtask: src === 'subtask' ? bucket : null,
   }
-}
-
-function webhookPathFromUrl(url) {
-  try {
-    const parsed = new URL(url)
-    return `${parsed.pathname}${parsed.search || ''}`
-  } catch {
-    return String(url || '').trim()
-  }
-}
-
-function isLocalVitePreview() {
-  if (typeof window === 'undefined' || !import.meta.env.DEV) return false
-  const host = String(window.location.hostname || '')
-  return !host.includes('kissflow.com')
-}
-
-function resolveWebhookRequest(url) {
-  const path = webhookPathFromUrl(url)
-  if (isLocalVitePreview()) {
-    return { href: path, path }
-  }
-  if (typeof window !== 'undefined' && window.location?.origin?.includes('kissflow.com')) {
-    return { href: path, path }
-  }
-  return { href: url, path }
 }
 
 function persistLastCreateWebhook(record) {
@@ -176,9 +139,14 @@ export async function submitPmCreateWebhook(kfInstance, source, { fields, create
   const pending = webhookInFlight.get(dedupeKey)
   if (pending) return pending
 
-  const { href, path } = resolveWebhookRequest(PM_CREATE_WEBHOOK_URL)
-  persistLastCreateWebhook({ href, payload, at: new Date().toISOString() })
-  console.info('[pm-create-webhook] POST', href, payload)
+  if (!isLocalVitePreview()) {
+    console.warn('Create webhook is sent by the application server.')
+    if (required) throw new Error('Create webhook is only available through the application server.')
+    return null
+  }
+
+  persistLastCreateWebhook({ href: CREATE_WEBHOOK_PATH, payload, at: new Date().toISOString() })
+  console.info('[pm-create-webhook] POST', CREATE_WEBHOOK_PATH, payload)
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -186,12 +154,7 @@ export async function submitPmCreateWebhook(kfInstance, source, { fields, create
   const body = JSON.stringify(payload)
 
   async function postOnce() {
-    if (kfInstance?.api && !isLocalVitePreview()) {
-      const viaSdk = await kfInstance.api(path, { method: 'POST', headers, body })
-      return viaSdk?.data ?? viaSdk ?? payload
-    }
-
-    const res = await fetch(href, {
+    const res = await fetch(CREATE_WEBHOOK_PATH, {
       method: 'POST',
       credentials: 'omit',
       headers,

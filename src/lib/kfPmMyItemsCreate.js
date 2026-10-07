@@ -259,7 +259,7 @@ function localProcessTenants() {
     keySecret: KF_LIVE_ACCESS_KEY_SECRET || KF_ACCESS_KEY_SECRET,
   }
   if (active.tenant === 'live') {
-    return [live].filter((tenant) => tenant.accountId && tenant.keyId && tenant.keySecret)
+    return [live].filter((tenant) => tenant.accountId)
   }
   return [
     {
@@ -270,7 +270,7 @@ function localProcessTenants() {
       keySecret: KF_ACCESS_KEY_SECRET,
     },
     live,
-  ].filter((tenant) => tenant.accountId && tenant.keyId && tenant.keySecret)
+  ].filter((tenant) => tenant.accountId)
 }
 
 function preferredProcessAccount(preferredAccountId) {
